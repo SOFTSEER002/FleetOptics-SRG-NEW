@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FleetOptics</string>
+    <string name="quick_field_txt">Please enter the recipient in the quick search field to retrieve the employee name in the FleetOptics Directory.</string>
+</resources>

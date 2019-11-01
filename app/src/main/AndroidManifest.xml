@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.doozycod.fleetoptics">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:launchMode="singleInstance"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:stateNotNeeded="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activities.CallingEmpActivity"></activity>
+        <activity
+            android:name=".Activities.OnSignOutActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.EmpPersonalCheckinActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.InterviewActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.NotifyActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.SpecificRecipientActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.SignatureActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.CheckInVisitActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.PackageDeliveryActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.CheckinTypeActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.SplashActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.CameraActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+</manifest>
