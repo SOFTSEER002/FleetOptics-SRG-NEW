@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         text_signin = findViewById(R.id.text_signin);
         signinButton = findViewById(R.id.signinBtn);
         signoutButton = findViewById(R.id.signoutButton);
-
-
     }
 
     @Override
@@ -62,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
                 R.anim.fade_out);
         animFadeout.setAnimationListener(this);
         animFadein.setAnimationListener(this);
+//        on Click events
         onClickListeners();
     }
 

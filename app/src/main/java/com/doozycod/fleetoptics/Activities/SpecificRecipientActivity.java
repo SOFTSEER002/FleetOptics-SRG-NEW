@@ -35,13 +35,17 @@ public class SpecificRecipientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_specific_recipient);
+
 //      typecasting
         initUI();
 
+//         Recyclerview Properties
         recycler_view.setHasFixedSize(true);
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
         recycler_view.setItemAnimator(new DefaultItemAnimator());
         recycler_view.setAdapter(recyclerAdapter);
+
+//        onClick events
         ClickListener();
     }
 
@@ -55,7 +59,6 @@ public class SpecificRecipientActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

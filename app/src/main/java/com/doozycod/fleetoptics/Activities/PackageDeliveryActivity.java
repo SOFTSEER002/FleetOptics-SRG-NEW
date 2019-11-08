@@ -24,8 +24,10 @@ public class PackageDeliveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_package_delivery);
         getSupportActionBar().hide();
 
-
+//      typecasting
         initUI();
+//        on click events
+
         onClickListener();
     }
 
@@ -38,7 +40,6 @@ public class PackageDeliveryActivity extends AppCompatActivity {
                 }
                 if (noRadioBtn.isChecked()) {
                     startActivity(new Intent(PackageDeliveryActivity.this, NotifyActivity.class));
-
                 }
             }
         });
@@ -49,7 +50,6 @@ public class PackageDeliveryActivity extends AppCompatActivity {
             }
         });
     }
-
     private void initUI() {
         yesRadioBtn = findViewById(R.id.yes_radio);
         noRadioBtn = findViewById(R.id.no_radio);

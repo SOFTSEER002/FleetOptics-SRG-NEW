@@ -4,17 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.doozycod.fleetoptics.Interface.CallbackListener;
 import com.doozycod.fleetoptics.R;
 
 public class SignOutRecyclerAdapter extends RecyclerView.Adapter<SignOutRecyclerAdapter.SignHolder> {
     Context context;
+    CallbackListener callbackListener;
 
-    public SignOutRecyclerAdapter(Context context) {
+    public SignOutRecyclerAdapter(Context context, CallbackListener callbackListener) {
         this.context = context;
+        this.callbackListener = callbackListener;
     }
 
     @NonNull
@@ -29,14 +33,21 @@ public class SignOutRecyclerAdapter extends RecyclerView.Adapter<SignOutRecycler
 
     }
 
+    void setCallbackListener(CallbackListener callbackListener) {
+        this.callbackListener = callbackListener;
+    }
+
     @Override
     public int getItemCount() {
         return 1;
     }
 
     public class SignHolder extends RecyclerView.ViewHolder {
+        TextView emp_nameSignout;
+
         public SignHolder(@NonNull View itemView) {
             super(itemView);
+            emp_nameSignout = itemView.findViewById(R.id.emp_nameSignout);
         }
     }
 }

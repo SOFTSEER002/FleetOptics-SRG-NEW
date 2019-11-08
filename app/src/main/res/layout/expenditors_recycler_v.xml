@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <CheckBox
-            android:id="@+id/emp_name"
+            android:id="@+id/emp_nameSignout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25dp"

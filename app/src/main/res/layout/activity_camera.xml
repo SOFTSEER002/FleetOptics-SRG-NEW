@@ -8,22 +8,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/profile_pic_"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:innerRadius="0dp"-->
-<!--            android:shape="ring"-->
-<!--            android:thicknessRatio="1.9"-->
-<!--            app:cardCornerRadius="250dp">-->
+
             <com.google.android.cameraview.CameraView
                 android:id="@+id/camera"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 app:facing="front"/>
-<!--        </androidx.cardview.widget.CardView>-->
     </FrameLayout>
     <ImageView
         android:layout_marginBottom="30dp"

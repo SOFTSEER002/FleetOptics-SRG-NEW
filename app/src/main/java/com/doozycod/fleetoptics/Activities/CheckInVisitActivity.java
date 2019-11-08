@@ -25,7 +25,7 @@ public class CheckInVisitActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton meetingRadioBtn, interviewRadioBtn, personalRadioBtn;
     EditText search_emp;
-    Button sumbitEmpBtn;
+    Button sumbitEmpBtn, backBtn;
     RecyclerView recyclerView;
     String purpose = "";
 
@@ -37,6 +37,7 @@ public class CheckInVisitActivity extends AppCompatActivity {
         meetingRadioBtn = findViewById(R.id.meeting);
         interviewRadioBtn = findViewById(R.id.interview);
         personalRadioBtn = findViewById(R.id.personal);
+        backBtn = findViewById(R.id.visitCheckinBackBtn);
     }
 
     @Override
@@ -64,15 +65,12 @@ public class CheckInVisitActivity extends AppCompatActivity {
                 }
                 if (interviewRadioBtn.isChecked()) {
                     purpose = "Drop-in Interview";
-
                     meetingRadioBtn.setChecked(false);
                     interviewRadioBtn.setChecked(true);
                     personalRadioBtn.setChecked(false);
-
                 }
                 if (personalRadioBtn.isChecked()) {
                     purpose = "Personal";
-
                     meetingRadioBtn.setChecked(false);
                     interviewRadioBtn.setChecked(false);
                     personalRadioBtn.setChecked(true);
@@ -80,6 +78,8 @@ public class CheckInVisitActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        search perform on text change update list
         search_emp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -96,7 +96,12 @@ public class CheckInVisitActivity extends AppCompatActivity {
 
             }
         });
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         sumbitEmpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

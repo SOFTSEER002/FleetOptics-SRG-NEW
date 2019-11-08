@@ -147,10 +147,10 @@ public class CameraActivity extends AppCompatActivity {
 
                 Bitmap finalImage;
                 if (deviceMan.equals("vivo")) {
-                    finalImage = Bitmap.createScaledBitmap(rotatedBitmap, 600, 800, false);
+                    finalImage = Bitmap.createScaledBitmap(rotateImage(rotatedBitmap, -1), 600, 800, false);
 
                 } else if (deviceMan.equals("OPPO")) {
-                    finalImage = Bitmap.createScaledBitmap(rotatedBitmap, 600, 800, false);
+                    finalImage = Bitmap.createScaledBitmap(rotateImage(rotatedBitmap, -1), 800, 600, false);
 
                 } else {
                     if (facing == CameraView.FACING_BACK) {

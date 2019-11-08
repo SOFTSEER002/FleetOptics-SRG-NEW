@@ -26,6 +26,7 @@ public class CheckinTypeActivity extends AppCompatActivity {
 //        typecasting
         initUI();
 
+//        onClick events
         onClickListener();
 
     }

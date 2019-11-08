@@ -14,11 +14,12 @@ import com.doozycod.fleetoptics.R;
 
 public class InterviewActivity extends AppCompatActivity {
     CheckBox checkBox;
-    Button submitButton;
+    Button submitButton, interBackBtn;
 
     private void initUI() {
         checkBox = findViewById(R.id.checkBox);
         submitButton = findViewById(R.id.submitInterButton);
+        interBackBtn = findViewById(R.id.interBackBtn);
     }
 
     @Override
@@ -43,6 +44,12 @@ public class InterviewActivity extends AppCompatActivity {
                     submitButton.setEnabled(false);
 
                 }
+            }
+        });
+        interBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
