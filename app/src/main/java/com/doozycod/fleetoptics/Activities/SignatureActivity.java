@@ -16,6 +16,8 @@ public class SignatureActivity extends AppCompatActivity {
     RadioButton yesRadioBtn, noRadioBtn;
     RadioGroup radioGroup;
     Button backSignature;
+
+//    typecasting method
     private void initUI() {
         yesRadioBtn = findViewById(R.id.yes_sign);
         noRadioBtn = findViewById(R.id.no_sign);
@@ -26,16 +28,20 @@ public class SignatureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        set Activity full Screen / hide status bar
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_signature);
+//        hide action bar
         getSupportActionBar().hide();
 
+//        typecasting
         initUI();
+//        set Click Listeners
         onClickListener();
     }
 
     private void onClickListener() {
-
+//          set radio button on check change listener
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -48,6 +54,7 @@ public class SignatureActivity extends AppCompatActivity {
                 }
             }
         });
+//        finish Activity on back press
         backSignature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

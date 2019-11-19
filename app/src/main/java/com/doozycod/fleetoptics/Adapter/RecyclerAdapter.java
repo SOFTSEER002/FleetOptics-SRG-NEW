@@ -26,7 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public void onBindViewHolder(@NonNull RecyclerAdapter.RecyclerHolder holder, int position) {
 
     }
-
+//  size of list employee
     @Override
     public int getItemCount() {
         return 1;

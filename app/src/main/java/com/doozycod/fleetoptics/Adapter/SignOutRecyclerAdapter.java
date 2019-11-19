@@ -14,6 +14,8 @@ import com.doozycod.fleetoptics.R;
 
 public class SignOutRecyclerAdapter extends RecyclerView.Adapter<SignOutRecyclerAdapter.SignHolder> {
     Context context;
+
+//    callback listener to add user
     CallbackListener callbackListener;
 
     public SignOutRecyclerAdapter(Context context, CallbackListener callbackListener) {

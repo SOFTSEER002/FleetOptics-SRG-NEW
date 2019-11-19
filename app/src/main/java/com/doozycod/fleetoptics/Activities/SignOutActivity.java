@@ -15,11 +15,12 @@ import com.doozycod.fleetoptics.Adapter.SignOutRecyclerAdapter;
 import com.doozycod.fleetoptics.Interface.CallbackListener;
 import com.doozycod.fleetoptics.R;
 
-public class OnSignOutActivity extends AppCompatActivity implements CallbackListener {
+public class SignOutActivity extends AppCompatActivity implements CallbackListener {
     RecyclerView recyclerView;
     SignOutRecyclerAdapter signOutRecyclerAdapter;
     Button SignOutSubmitButton, signOutBackBtn;
 
+//    typecasting method
     private void initUI() {
         recyclerView = findViewById(R.id.signoutRecyclerView);
         SignOutSubmitButton = findViewById(R.id.SignOutSubmitButton);
@@ -36,26 +37,36 @@ public class OnSignOutActivity extends AppCompatActivity implements CallbackList
 //        Typecasting
         initUI();
 
+//        recyclerview properties
+        recyclerviewAdapter();
+
+//        on Click Listener
+        OnClickListener();
+    }
+
+//    rv properties method
+    private void recyclerviewAdapter() {
         signOutRecyclerAdapter = new SignOutRecyclerAdapter(this, this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(signOutRecyclerAdapter);
-
-        OnClickListener();
     }
 
+
     private void OnClickListener() {
+//        finish Activity
         signOutBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+//        start Home ACtivity on sign out submit button
         SignOutSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OnSignOutActivity.this, MainActivity.class));
+                startActivity(new Intent(SignOutActivity.this, HomeActivity.class));
                 finish();
             }
         });

@@ -44,12 +44,12 @@ public class SpecificRecipientActivity extends AppCompatActivity {
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
         recycler_view.setItemAnimator(new DefaultItemAnimator());
         recycler_view.setAdapter(recyclerAdapter);
-
 //        onClick events
         ClickListener();
     }
 
     private void ClickListener() {
+//        take to Notify activity and set signture msg
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,9 +62,12 @@ public class SpecificRecipientActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+//        custom main bar layout
         getMenuInflater().inflate(R.menu.menu_with_searchbar, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.searchView).getActionView();
 
+//        search bar on actionbar
+        SearchView searchView = (SearchView) menu.findItem(R.id.searchView).getActionView();
+//          start search manager service
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);

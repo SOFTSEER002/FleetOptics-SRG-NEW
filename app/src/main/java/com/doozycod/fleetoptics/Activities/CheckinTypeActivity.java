@@ -32,19 +32,21 @@ public class CheckinTypeActivity extends AppCompatActivity {
     }
 
     private void onClickListener() {
-
+//      start Package activity
         packageDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CheckinTypeActivity.this,PackageDeliveryActivity.class));
             }
         });
+//        start Check in visitor
         checkInVisitor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CheckinTypeActivity.this,CheckInVisitActivity.class));
             }
         });
+//        finish activity
         backCheckin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

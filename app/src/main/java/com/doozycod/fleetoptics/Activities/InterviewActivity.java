@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,18 +16,24 @@ import com.doozycod.fleetoptics.R;
 public class InterviewActivity extends AppCompatActivity {
     CheckBox checkBox;
     Button submitButton, interBackBtn;
-
+    EditText visitorName,visitorEmail,visitorPhoneNo;
+//    typecasting method
     private void initUI() {
         checkBox = findViewById(R.id.checkBox);
         submitButton = findViewById(R.id.submitInterButton);
         interBackBtn = findViewById(R.id.interBackBtn);
+        visitorName = findViewById(R.id.visitorName);
+        visitorEmail = findViewById(R.id.visitorEmail);
+        visitorPhoneNo = findViewById(R.id.visitorPhoneNo);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        set Activity FULL SCREEN VIEW/ hide status
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_interview);
+//        hide action bar
         getSupportActionBar().hide();
         initUI();
         submitButton.setEnabled(false);
@@ -35,6 +42,7 @@ public class InterviewActivity extends AppCompatActivity {
 
     private void onClickListener() {
 
+//        checkbox set submit button enable/disable
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -46,16 +54,33 @@ public class InterviewActivity extends AppCompatActivity {
                 }
             }
         });
+//        finish activity
         interBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+//        submit form and goto take picture/camera Activity
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(InterviewActivity.this, CameraActivity.class));
+//                validation for visitor details
+                if(visitorName.getText().toString().equals("")){
+                    visitorName.setError("Please Enter Name");
+                    return;
+                }
+                if(visitorEmail.getText().toString().equals("")){
+                    visitorEmail.setError("Please Enter Email");
+                    return;
+                }if(visitorPhoneNo.getText().toString().equals("")){
+                    visitorEmail.setError("Please Enter Phone no");
+                    return;
+                }
+//                start camera activity
+                else{
+                    startActivity(new Intent(InterviewActivity.this, CameraActivity.class));
+                }
             }
         });
     }

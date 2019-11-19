@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -96,30 +97,38 @@ public class CheckInVisitActivity extends AppCompatActivity {
 
             }
         });
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+
         sumbitEmpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                if meeting is checked start EmpPersocalCheckin Activity
                 if (meetingRadioBtn.isChecked()) {
-                    startActivity(new Intent(CheckInVisitActivity.this, EmpPersonalCheckinActivity.class));
+                    startActivity(new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class));
+                    return;
                 }
+//                if interview is checked start Interview Activity
                 if (interviewRadioBtn.isChecked()) {
                     startActivity(new Intent(CheckInVisitActivity.this, InterviewActivity.class));
-                }
-                if (personalRadioBtn.isChecked()) {
-                    startActivity(new Intent(CheckInVisitActivity.this, EmpPersonalCheckinActivity.class));
 
+                }
+//                if personal is checked start EmpPersocalCheckin Activity
+                if (personalRadioBtn.isChecked()) {
+                    startActivity(new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class));
+                } else {
+                    Toast.makeText(CheckInVisitActivity.this, "Select Visit Type", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-
+    //create menu in actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_with_searchbar, menu);
@@ -146,6 +155,7 @@ public class CheckInVisitActivity extends AppCompatActivity {
         return true;
     }
 
+    // onback action back press finish activity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

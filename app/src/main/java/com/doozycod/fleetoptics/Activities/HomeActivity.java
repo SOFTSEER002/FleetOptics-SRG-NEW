@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.PermissionRequest;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,7 +22,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements Animation.AnimationListener {
+public class HomeActivity extends AppCompatActivity implements Animation.AnimationListener {
     // Animation
     Animation animFadein;
     Animation animFadeout;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+//        hide Action Bar
         getSupportActionBar().hide();
 
 //      Permission for Camera and Storage
@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     }
 
     private void onClickListeners() {
+
+//         on click one time for animation
         main_screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,17 +76,19 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
 
             }
         });
+//        start signin Activity
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CheckinTypeActivity.class));
+                startActivity(new Intent(HomeActivity.this, CheckinTypeActivity.class));
 //                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
+//        start signout Activity
         signoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, OnSignOutActivity.class));
+                startActivity(new Intent(HomeActivity.this, SignOutActivity.class));
 //                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
@@ -99,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
 
     @Override
     public void onAnimationEnd(Animation animation) {
+//        animation fadeout
         if (animation == animFadeout) {
             text_signin.setVisibility(View.GONE);
             SigninSignoutButton.setVisibility(View.VISIBLE);
@@ -107,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
 
 
     }
+
+//    permission for runtime using dexter!
     private void permissionCheck() {
         Dexter.withActivity(this)
                 .withPermissions(

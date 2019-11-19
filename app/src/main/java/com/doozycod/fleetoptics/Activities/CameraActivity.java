@@ -44,8 +44,6 @@ public class CameraActivity extends AppCompatActivity {
     private void initUI() {
         mCameraView = findViewById(R.id.camera);
         takePicture = findViewById(R.id.take_picture);
-
-
         deviceName = android.os.Build.MODEL;
         deviceMan = android.os.Build.MANUFACTURER;
     }
@@ -55,18 +53,27 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera);
+
+//        hide actionbar
         getSupportActionBar().hide();
+
+//        typecasting
         initUI();
+
+//        click listeners
+//        handler will start working for now in ClickListeners
         ClickListeners();
+
         Toast.makeText(this, "Please smile we will take a picture of yours in 5 seconds!", Toast.LENGTH_SHORT).show();
-        if (mCameraView != null) {
+//        call view callback to cameraView
+        if(mCameraView != null) {
             mCameraView.addCallback(mCallback);
 
         }
 
     }
 
-
+//on click listener method
     private void ClickListeners() {
         handler = new Handler();
         handler.postDelayed(runnable = new Runnable() {
@@ -91,7 +98,7 @@ public class CameraActivity extends AppCompatActivity {
 
     }
 
-
+// stop caemra view in pause state
     @Override
     protected void onPause() {
         Log.d("onPuase", "onPause called");
@@ -99,6 +106,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onPause();
     }
 
+//    start cameraView on activity resume state
     @Override
     protected void onResume() {
         super.onResume();
@@ -111,21 +119,23 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+//    CameraView callback
     private CameraView.Callback mCallback = new CameraView.Callback() {
 
         @Override
         public void onCameraOpened(CameraView cameraView) {
-            Log.d("MainActivity", "onCameraOpened");
+            Log.d("HomeActivity", "onCameraOpened");
         }
 
         @Override
         public void onCameraClosed(CameraView cameraView) {
-            Log.d("MainActivity", "onCameraClosed");
+            Log.d("HomeActivity", "onCameraClosed");
         }
 
+//        create visitor photo
         @Override
         public void onPictureTaken(CameraView cameraView, final byte[] data) {
-            Log.d("MainActivity", "onPictureTaken " + data.length);
+            Log.d("HomeActivity", "onPictureTaken " + data.length);
            /* Toast.makeText(cameraView.getContext(), R.string.picture_taken, Toast.LENGTH_SHORT)
                     .show();*/
             Bitmap bp = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -144,7 +154,7 @@ public class CameraActivity extends AppCompatActivity {
                 rotatedBitmap = Bitmap.createBitmap(loadedImage, 0, 0,
                         loadedImage.getWidth(), loadedImage.getHeight(),
                         rotateMatrix, false);
-
+//              final bitmap for different device camera perspective
                 Bitmap finalImage;
                 if (deviceMan.equals("vivo")) {
                     finalImage = Bitmap.createScaledBitmap(rotateImage(rotatedBitmap, -1), 600, 800, false);
@@ -160,7 +170,7 @@ public class CameraActivity extends AppCompatActivity {
                     }
                 }
 
-
+//              storage location
                 String state = Environment.getExternalStorageState();
                 File directory = null;
                 if (state.contains(Environment.MEDIA_MOUNTED)) {
@@ -202,7 +212,7 @@ public class CameraActivity extends AppCompatActivity {
 
                 setResult(Activity.RESULT_OK); //add this
                 if (!TextUtils.isEmpty(imageFile.getAbsolutePath())) {
-                    Log.e("MainActivity", "onPictureTaken: " + "Image saved to gallery!" + imageFile.getAbsolutePath());
+                    Log.e("HomeActivity", "onPictureTaken: " + "Image saved to gallery!" + imageFile.getAbsolutePath());
 
 //                    uploadPhotos(imageFile.getAbsolutePath());
 //                    Intent intent = new Intent(CameraActivity.this, VisitorRegisterActivity.class);
@@ -211,7 +221,7 @@ public class CameraActivity extends AppCompatActivity {
                     finish();
 
                 } else {
-                    Log.e("MainActivity", "onPictureTaken: " + "Unable to save image!");
+                    Log.e("HomeActivity", "onPictureTaken: " + "Unable to save image!");
 
                 }
 //                        finish();
@@ -228,14 +238,16 @@ public class CameraActivity extends AppCompatActivity {
         return compressedByteArray;
     }
 
+//    start CheckInVisitActivity
     @Override
     public void onBackPressed() {
         startActivity(new Intent(CameraActivity.this, CheckInVisitActivity.class));
         super.onBackPressed();
     }
 
-
+//          resize bitmap in less size
     private Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+
         if (maxHeight > 0 && maxWidth > 0) {
             int width = image.getWidth();
             int height = image.getHeight();

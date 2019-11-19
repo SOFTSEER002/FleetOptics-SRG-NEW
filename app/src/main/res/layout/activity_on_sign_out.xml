@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.OnSignOutActivity">
+    tools:context=".Activities.SignOutActivity">
     <EditText
         android:id="@+id/signOutDirectory"
         android:layout_below="@id/signOutBackBtn"

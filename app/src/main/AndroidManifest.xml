@@ -11,12 +11,12 @@
         android:stateNotNeeded="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CallingEmpActivity"></activity>
+        <activity android:name=".Activities.MessageToEmpActivity"></activity>
         <activity
-            android:name=".Activities.OnSignOutActivity"
+            android:name=".Activities.SignOutActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Activities.EmpPersonalCheckinActivity"
+            android:name=".Activities.PersonalMeetingActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Activities.InterviewActivity"
@@ -46,7 +46,7 @@
             android:name=".Activities.CameraActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.HomeActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,21 +7,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.doozycod.fleetoptics.R;
 
-public class CallingEmpActivity extends AppCompatActivity {
+public class MessageToEmpActivity extends AppCompatActivity {
     TextView message, message2;
+    //    typecasting method
+    private void initUI() {
+        message = findViewById(R.id.messageCall);
+        message2 = findViewById(R.id.messageCall2);
 
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calling_emp);
 
+//        typecasting
         initUI();
     }
 
-    private void initUI() {
-
-        message = findViewById(R.id.messageCall);
-        message2 = findViewById(R.id.messageCall2);
-
-    }
 }
