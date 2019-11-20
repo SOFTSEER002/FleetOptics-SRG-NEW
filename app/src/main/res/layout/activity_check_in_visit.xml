@@ -8,17 +8,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:text="Purpose of Visit:"
         android:textSize="30dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     <Button
         android:id="@+id/visitCheckinBackBtn"
-        android:layout_marginRight="10dp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
         android:background="@drawable/ic_arrow_back_black_24dp"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentLeft="true"/>
     <ScrollView
         android:layout_below="@+id/visitCheckinBackBtn"
         android:layout_width="match_parent"
@@ -118,13 +120,12 @@
 
     <Button
         android:id="@+id/sumbitEmpBtn"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
         android:text="submit"
-        android:layout_marginBottom="15dp"
         android:background="@drawable/button_bg"
-        android:layout_marginRight="100dp"/>
+        android:layout_marginRight="15dp"/>
 
 </RelativeLayout>

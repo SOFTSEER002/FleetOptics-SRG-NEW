@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,14 +28,14 @@ import static com.doozycod.fleetoptics.R.drawable.et_bg;
 
 public class PersonalMeetingActivity extends AppCompatActivity {
     EditText visitorFullName, companyName, emailAddress, visitorPhoneNo;
-    Button meetBackBtn, finishInterButton, submitInterButton;
+    Button meetBackBtn, submitInterButton;
     CheckBox checkBox, checkMultipleVisitor;
-    LinearLayout companyBox, phoneBox, emailBox, linearLayout1st, linearLayout2nd;
-    boolean isFinished = false;
+    LinearLayout companyBox, phoneBox, emailBox, linearLayout1st, linearLayout2nd, linearLayout2ndRoot;
+
     int numberOfLines = 0;
+    int numberOfbtns = 100;
     ImageView AddPeopleBtn;
     List<EditText> allEds = new ArrayList<EditText>();
-    ImageView tv;
 
     //    typecasting method
     private void initUI() {
@@ -48,51 +49,17 @@ public class PersonalMeetingActivity extends AppCompatActivity {
         phoneBox = findViewById(R.id.phoneBox);
         emailBox = findViewById(R.id.emailBox);
 
-
         linearLayout1st = findViewById(R.id.linearLayout1st);
         linearLayout2nd = findViewById(R.id.linearLayout2nd);
+        linearLayout2ndRoot = findViewById(R.id.linearLayout2ndRoot);
         /*
         linearLayout3rd = findViewById(R.id.linearLayout3rd);*/
         checkBox = findViewById(R.id.checkBox);
         checkMultipleVisitor = findViewById(R.id.checkMultipleVisitor);
         meetBackBtn = findViewById(R.id.meetBackBtn);
         submitInterButton = findViewById(R.id.submitInterButton);
-        finishInterButton = findViewById(R.id.finishInterButton);
     }
 
-    //      Dynamic Edit Text Method
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void AddDynamicEditText() {
-        LinearLayout linearLayout2nd = (LinearLayout) findViewById(R.id.linearLayout2nd);
-        linearLayout2nd.setVisibility(VISIBLE);
-        linearLayout2nd.setWeightSum(1);
-        linearLayout2nd.setPadding(0, 0, 0, 0);
-        linearLayout2nd.setGravity(LinearLayout.VERTICAL);
-
-        // add edittext
-        EditText et = new EditText(this);
-//        tv = new ImageView(this);
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(1200, 150);
-        p.setMargins(0, 0, 0, 30);
-
-        et.setLayoutParams(p);
-
-//        tv.setImageResource(R.drawable.ic_close);
-        et.setHint("Visitor Name");
-//        et.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
-        et.setPadding(40, 20, 20, 20);
-        et.setBackground(getDrawable(et_bg));
-        et.setId(numberOfLines + 1);
-
-        allEds.add(et);
-
-//        ll.addView(tv);
-        linearLayout2nd.addView(et);
-//        linearLayout2nd.addView(tv);
-        numberOfLines++;
-
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,34 +69,50 @@ public class PersonalMeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_employee_personal);
 //        hide Action bar
         getSupportActionBar().hide();
-
-
 //        typecasting
         initUI();
-
 //        change visibility for finish button and submit button
-        finishInterButton.setEnabled(false);
-        finishInterButton.setVisibility(View.GONE);
         submitInterButton.setEnabled(false);
         AddPeopleBtn.setVisibility(View.GONE);
-
 //      click listener
         clickListeners();
 
     }
+    //      Dynamic Edit Text Method
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void AddDynamicEditText() {
+//        final LinearLayout linearLayout2nd = (LinearLayout) findViewById(R.id.linearLayout2nd);
+        linearLayout2nd.setVisibility(VISIBLE);
+        linearLayout2nd.setWeightSum(1);
+        linearLayout2nd.setPadding(0, 0, 0, 0);
 
-    public void removeLine(int i) {
-        linearLayout2nd.removeViewAt(i);
+        linearLayout2nd.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        // add edittext
+        final EditText et = new EditText(this);
+//        tv = new ImageView(this);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(1200, 150);
+        p.setMargins(0, 0, 0, 30);
+
+        et.setLayoutParams(p);
+//        tv.setLayoutParams(btnParams);
+//        tv.setImageResource(R.drawable.ic_close);
+        et.setHint("Visitor Name");
+//        et.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+        et.setPadding(40, 20, 20, 20);
+        et.setBackground(getDrawable(et_bg));
+        et.setId(numberOfLines + 1);
+        allEds.add(et);
+        linearLayout2nd.addView(et);
+        numberOfLines++;
+        numberOfbtns++;
     }
 
     public void removeLineAll() {
-        linearLayout2nd.removeViewAt(linearLayout2nd.getChildCount() - 1);
+        linearLayout2nd.removeAllViews();
     }
 
     private void clickListeners() {
-        if (tv != null) {
-
-        }
 
         AddPeopleBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -153,21 +136,17 @@ public class PersonalMeetingActivity extends AppCompatActivity {
                     if (b) {
                         linearLayout1st.setVisibility(View.GONE);
                         linearLayout2nd.setVisibility(VISIBLE);
-                        finishInterButton.setVisibility(VISIBLE);
-                        finishInterButton.setEnabled(true);
+                        linearLayout2ndRoot.setVisibility(VISIBLE);
+
                         AddDynamicEditText();
                         AddPeopleBtn.setVisibility(VISIBLE);
                     } else {
-                        finishInterButton.setEnabled(true);
-                        finishInterButton.setVisibility(View.GONE);
                         linearLayout1st.setVisibility(VISIBLE);
                         linearLayout2nd.setVisibility(View.GONE);
+                        linearLayout2ndRoot.setVisibility(View.GONE);
                         AddPeopleBtn.setVisibility(View.GONE);
                         numberOfLines = 0;
-
-                        for (int i = 0; i < allEds.size(); i++) {
-                            removeLineAll();
-                        }
+                        removeLineAll();
 //                        clear edittext data is check Multiple is unChecked!
                         if (allEds.size() > 0) {
                             allEds.clear();
@@ -184,6 +163,7 @@ public class PersonalMeetingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
+
                     submitInterButton.setEnabled(true);
 
                 } else {
@@ -200,7 +180,7 @@ public class PersonalMeetingActivity extends AppCompatActivity {
             }
         });
 
-//        finish button click set finish visiblity gone
+/*//        finish button click set finish visiblity gone
         finishInterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,28 +188,33 @@ public class PersonalMeetingActivity extends AppCompatActivity {
                 Toast.makeText(PersonalMeetingActivity.this, "Contacts Added!", Toast.LENGTH_SHORT).show();
                 finishInterButton.setVisibility(View.GONE);
                 isFinished = true;
+            }
+        });*/
+
+//        submit go to notify activity!
+        submitInterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                add dynamic editext data into Arraylist
                 String[] strings = new String[allEds.size()];
                 for (int i = 0; i < allEds.size(); i++) {
                     strings[i] = allEds.get(i).getText().toString();
                     Log.e("onClick!", "onClick: " + strings[i]);
                 }
-
-            }
-        });
-//        submit go to notify activity!
-        submitInterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isFinished) {
+                if (checkMultipleVisitor.isChecked()) {
                     Intent intent = new Intent(PersonalMeetingActivity.this, NotifyActivity.class);
                     intent.putExtra("multiple", "multiple");
                     startActivity(intent);
                 } else {
-                    Toast.makeText(PersonalMeetingActivity.this, "Please tap finish first!", Toast.LENGTH_SHORT).show();
+                    if (!checkMultipleVisitor.isChecked()) {
+                        Intent intent = new Intent(PersonalMeetingActivity.this, NotifyActivity.class);
+                        intent.putExtra("multiple", "multiple");
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(PersonalMeetingActivity.this, "Please tap finish first!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
-
 }

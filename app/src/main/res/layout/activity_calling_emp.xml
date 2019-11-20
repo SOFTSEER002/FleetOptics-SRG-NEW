@@ -11,7 +11,6 @@
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/messageCall"
             android:layout_width="match_parent"
@@ -20,7 +19,6 @@
             android:gravity="center_horizontal"
             android:text="Please wait…"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
         <TextView
             android:id="@+id/messageCall2"
             android:layout_width="match_parent"

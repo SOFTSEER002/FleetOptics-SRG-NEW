@@ -20,6 +20,5 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:padding="10dp"
             android:text="user Name"/>
-
     </LinearLayout>
 </RelativeLayout>

@@ -41,13 +41,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".Activities.SplashActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activities.CameraActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activities.HomeActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,6 +50,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.CameraActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Activities.HomeActivity"
+            android:screenOrientation="landscape">
+
         </activity>
     </application>
 

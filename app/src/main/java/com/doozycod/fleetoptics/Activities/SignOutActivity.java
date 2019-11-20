@@ -66,7 +66,7 @@ public class SignOutActivity extends AppCompatActivity implements CallbackListen
         SignOutSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SignOutActivity.this, HomeActivity.class));
+                startActivity(new Intent(SignOutActivity.this, SplashActivity.class));
                 finish();
             }
         });

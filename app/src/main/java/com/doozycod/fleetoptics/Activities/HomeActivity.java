@@ -22,10 +22,8 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements Animation.AnimationListener {
-    // Animation
-    Animation animFadein;
-    Animation animFadeout;
+public class HomeActivity extends AppCompatActivity {
+
     RelativeLayout main_screen;
     LinearLayout SigninSignoutButton;
     TextView text_signin;
@@ -53,13 +51,6 @@ public class HomeActivity extends AppCompatActivity implements Animation.Animati
 //          typecasting
         initUI();
 
-//        Animation
-        animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.fade_in);
-        animFadeout = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.fade_out);
-        animFadeout.setAnimationListener(this);
-        animFadein.setAnimationListener(this);
 //        on Click events
         onClickListeners();
     }
@@ -70,8 +61,10 @@ public class HomeActivity extends AppCompatActivity implements Animation.Animati
         main_screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                animFadeout.start();
-                text_signin.startAnimation(animFadeout);
+
+                    text_signin.setVisibility(View.GONE);
+                    SigninSignoutButton.setVisibility(View.VISIBLE);
+
                 main_screen.setEnabled(false);
 
             }
@@ -92,25 +85,6 @@ public class HomeActivity extends AppCompatActivity implements Animation.Animati
 //                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
-
-    }
-
-
-    @Override
-    public void onAnimationStart(Animation animation) {
-
-    }
-
-    @Override
-    public void onAnimationEnd(Animation animation) {
-//        animation fadeout
-        if (animation == animFadeout) {
-            text_signin.setVisibility(View.GONE);
-            SigninSignoutButton.setVisibility(View.VISIBLE);
-            SigninSignoutButton.startAnimation(animFadein);
-        }
-
-
     }
 
 //    permission for runtime using dexter!
@@ -128,17 +102,9 @@ public class HomeActivity extends AppCompatActivity implements Animation.Animati
 
             @Override
             public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> permissions, PermissionToken token) {
-
             }
 
-
-
         }).check();
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-
     }
 
     @Override

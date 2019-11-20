@@ -50,14 +50,17 @@ public class NotifyActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(NotifyActivity.this, HomeActivity.class));
+                startActivity(new Intent(NotifyActivity.this, SplashActivity.class));
             }
         }, 10000);
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(NotifyActivity.this, HomeActivity.class));
-        finishAffinity();
+
+       /* startActivity(new Intent(NotifyActivity.this, HomeActivity.class));
+        finishAffinity();*/
     }
+
+
 }

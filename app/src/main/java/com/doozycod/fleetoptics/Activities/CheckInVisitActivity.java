@@ -116,7 +116,7 @@ public class CheckInVisitActivity extends AppCompatActivity {
 //                if interview is checked start Interview Activity
                 if (interviewRadioBtn.isChecked()) {
                     startActivity(new Intent(CheckInVisitActivity.this, InterviewActivity.class));
-
+                    return;
                 }
 //                if personal is checked start EmpPersocalCheckin Activity
                 if (personalRadioBtn.isChecked()) {
