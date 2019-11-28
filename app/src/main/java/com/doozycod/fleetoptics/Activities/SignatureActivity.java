@@ -49,7 +49,8 @@ public class SignatureActivity extends AppCompatActivity {
                     startActivity(new Intent(SignatureActivity.this, SpecificRecipientActivity.class));
                 }
                 if (noRadioBtn.isChecked()) {
-                    startActivity(new Intent(SignatureActivity.this, NotifyActivity.class));
+                    Intent intent = new Intent(SignatureActivity.this, NotifyActivity.class);
+                    startActivity(intent);
 
                 }
             }

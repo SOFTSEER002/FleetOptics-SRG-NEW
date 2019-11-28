@@ -59,6 +59,11 @@ public class CheckInVisitActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (meetingRadioBtn.isChecked()) {
                     purpose = "Meeting";
+                    if(!search_emp.isEnabled()){
+                        search_emp.setText("");
+                    }
+                    search_emp.setEnabled(true);
+                    recyclerView.setEnabled(true);
                     meetingRadioBtn.setChecked(true);
                     interviewRadioBtn.setChecked(false);
                     personalRadioBtn.setChecked(false);
@@ -66,12 +71,20 @@ public class CheckInVisitActivity extends AppCompatActivity {
                 }
                 if (interviewRadioBtn.isChecked()) {
                     purpose = "Drop-in Interview";
+                    search_emp.setText("");
+                    search_emp.setEnabled(false);
+                    recyclerView.setEnabled(false);
                     meetingRadioBtn.setChecked(false);
                     interviewRadioBtn.setChecked(true);
                     personalRadioBtn.setChecked(false);
                 }
                 if (personalRadioBtn.isChecked()) {
                     purpose = "Personal";
+                    search_emp.setEnabled(true);
+                    if(!search_emp.isEnabled()){
+                        search_emp.setText("");
+                    }
+                    recyclerView.setEnabled(true);
                     meetingRadioBtn.setChecked(false);
                     interviewRadioBtn.setChecked(false);
                     personalRadioBtn.setChecked(true);
@@ -110,17 +123,23 @@ public class CheckInVisitActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                if meeting is checked start EmpPersocalCheckin Activity
                 if (meetingRadioBtn.isChecked()) {
-                    startActivity(new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class));
+                    Intent intent = new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class);
+                    intent.putExtra("checkinType", "meeting");
+                    startActivity(intent);
                     return;
                 }
 //                if interview is checked start Interview Activity
                 if (interviewRadioBtn.isChecked()) {
-                    startActivity(new Intent(CheckInVisitActivity.this, InterviewActivity.class));
+                    Intent intent = new Intent(CheckInVisitActivity.this, InterviewActivity.class);
+                    intent.putExtra("checkinType", "interview");
+                    startActivity(intent);
                     return;
                 }
 //                if personal is checked start EmpPersocalCheckin Activity
                 if (personalRadioBtn.isChecked()) {
-                    startActivity(new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class));
+                    Intent intent = new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class);
+                    intent.putExtra("checkinType", "personal");
+                    startActivity(intent);
                 } else {
                     Toast.makeText(CheckInVisitActivity.this, "Select Visit Type", Toast.LENGTH_SHORT).show();
                 }

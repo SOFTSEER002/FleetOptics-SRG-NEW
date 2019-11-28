@@ -23,7 +23,7 @@ public class SpecificRecipientActivity extends AppCompatActivity {
     Button submitButton;
     RecyclerView recycler_view;
     RecyclerAdapter recyclerAdapter;
-
+    String checkin_type;
     private void initUI() {
 
         submitButton = findViewById(R.id.submitButton);
@@ -53,8 +53,10 @@ public class SpecificRecipientActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkin_type = "Delivery";
                 Intent intent = new Intent(SpecificRecipientActivity.this, NotifyActivity.class);
-                intent.putExtra("signature","must");
+                intent.putExtra("signature", "signature");
+
                 startActivity(intent);
             }
         });

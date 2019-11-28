@@ -30,6 +30,7 @@ public class NotifyActivity extends AppCompatActivity {
 //         typecasting
         initUI();
 //        if user is returning from signature Activity
+
         if (getIntent().hasExtra("signature")) {
             message.setText("The recipient has been notified… Please wait.");
             message2.setText("Someone will be with you shortly to receive the package… Thank You!");
@@ -39,6 +40,10 @@ public class NotifyActivity extends AppCompatActivity {
             message.setText("John has been notified and will be with you shortly… Thank You!");
             message2.setText("Sorry. John is not available at this time. Please try again later." +
                     "Thank you for stopping by!");
+        }
+        if (getIntent().hasExtra("no_sign")) {
+            message.setText("Please leave the package here, Thank You!");
+            message2.setText("");
         }
 //        if visitor is delivering something
         else {
@@ -51,6 +56,7 @@ public class NotifyActivity extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(new Intent(NotifyActivity.this, SplashActivity.class));
+                finish();
             }
         }, 10000);
     }

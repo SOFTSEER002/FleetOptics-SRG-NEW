@@ -50,13 +50,11 @@ public class HomeActivity extends AppCompatActivity {
         permissionCheck();
 //          typecasting
         initUI();
-
 //        on Click events
         onClickListeners();
     }
 
     private void onClickListeners() {
-
 //         on click one time for animation
         main_screen.setOnClickListener(new View.OnClickListener() {
             @Override

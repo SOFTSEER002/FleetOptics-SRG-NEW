@@ -3,6 +3,7 @@ package com.doozycod.fleetoptics.Activities;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -20,7 +21,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.doozycod.fleetoptics.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static android.view.View.VISIBLE;
@@ -74,10 +77,14 @@ public class PersonalMeetingActivity extends AppCompatActivity {
 //        change visibility for finish button and submit button
         submitInterButton.setEnabled(false);
         AddPeopleBtn.setVisibility(View.GONE);
+
+        String typeOfVisit = getIntent().getStringExtra("checkinType");
+
 //      click listener
         clickListeners();
 
     }
+
     //      Dynamic Edit Text Method
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void AddDynamicEditText() {
@@ -163,8 +170,12 @@ public class PersonalMeetingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-
-                    submitInterButton.setEnabled(true);
+                    if (TextUtils.isEmpty(visitorFullName.getText()) || TextUtils.isEmpty(visitorPhoneNo.getText()) || TextUtils.isEmpty(emailAddress.getText())) {
+                        Toast.makeText(PersonalMeetingActivity.this, "Please enter details!", Toast.LENGTH_SHORT).show();
+                        checkBox.setChecked(false);
+                    } else {
+                        submitInterButton.setEnabled(true);
+                    }
 
                 } else {
                     submitInterButton.setEnabled(false);
@@ -195,12 +206,15 @@ public class PersonalMeetingActivity extends AppCompatActivity {
         submitInterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+                String currentDateandTime = sdf.format(new Date());
 //                add dynamic editext data into Arraylist
                 String[] strings = new String[allEds.size()];
                 for (int i = 0; i < allEds.size(); i++) {
                     strings[i] = allEds.get(i).getText().toString();
                     Log.e("onClick!", "onClick: " + strings[i]);
                 }
+
                 if (checkMultipleVisitor.isChecked()) {
                     Intent intent = new Intent(PersonalMeetingActivity.this, NotifyActivity.class);
                     intent.putExtra("multiple", "multiple");

@@ -13,11 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.doozycod.fleetoptics.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class InterviewActivity extends AppCompatActivity {
     CheckBox checkBox;
     Button submitButton, interBackBtn;
-    EditText visitorName,visitorEmail,visitorPhoneNo;
-//    typecasting method
+    EditText visitorName, visitorEmail, visitorPhoneNo;
+    String checkinType;
+
+    //    typecasting method
     private void initUI() {
         checkBox = findViewById(R.id.checkBox);
         submitButton = findViewById(R.id.submitInterButton);
@@ -36,6 +41,7 @@ public class InterviewActivity extends AppCompatActivity {
 //        hide action bar
         getSupportActionBar().hide();
         initUI();
+        checkinType = getIntent().getStringExtra("checkinType");
         submitButton.setEnabled(false);
         onClickListener();
     }
@@ -50,7 +56,6 @@ public class InterviewActivity extends AppCompatActivity {
                     submitButton.setEnabled(true);
                 } else {
                     submitButton.setEnabled(false);
-
                 }
             }
         });
@@ -66,19 +71,22 @@ public class InterviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                validation for visitor details
-                if(visitorName.getText().toString().equals("")){
+                if (visitorName.getText().toString().equals("")) {
                     visitorName.setError("Please Enter Name");
                     return;
                 }
-                if(visitorEmail.getText().toString().equals("")){
+                if (visitorEmail.getText().toString().equals("")) {
                     visitorEmail.setError("Please Enter Email");
                     return;
-                }if(visitorPhoneNo.getText().toString().equals("")){
+                }
+                if (visitorPhoneNo.getText().toString().equals("")) {
                     visitorEmail.setError("Please Enter Phone no");
                     return;
                 }
 //                start camera activity
-                else{
+                else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+                    String currentDateandTime = sdf.format(new Date());
                     startActivity(new Intent(InterviewActivity.this, CameraActivity.class));
                 }
             }

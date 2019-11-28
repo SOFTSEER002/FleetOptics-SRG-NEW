@@ -62,6 +62,5 @@ public class CheckinTypeActivity extends AppCompatActivity {
         super.onBackPressed();
 //        overridePendingTransition( R.anim.slide_in,R.anim.slide_out);
 
-
     }
 }

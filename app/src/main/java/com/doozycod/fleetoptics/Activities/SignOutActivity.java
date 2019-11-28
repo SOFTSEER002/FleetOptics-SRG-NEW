@@ -15,6 +15,9 @@ import com.doozycod.fleetoptics.Adapter.SignOutRecyclerAdapter;
 import com.doozycod.fleetoptics.Interface.CallbackListener;
 import com.doozycod.fleetoptics.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class SignOutActivity extends AppCompatActivity implements CallbackListener {
     RecyclerView recyclerView;
     SignOutRecyclerAdapter signOutRecyclerAdapter;
@@ -62,10 +65,15 @@ public class SignOutActivity extends AppCompatActivity implements CallbackListen
                 onBackPressed();
             }
         });
+
 //        start Home ACtivity on sign out submit button
         SignOutSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+                String currentDateandTime = sdf.format(new Date());
+
                 startActivity(new Intent(SignOutActivity.this, SplashActivity.class));
                 finish();
             }

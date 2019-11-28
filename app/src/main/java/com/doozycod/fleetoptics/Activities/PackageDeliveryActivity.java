@@ -17,6 +17,13 @@ public class PackageDeliveryActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     Button backPackageDelivery;
 
+    private void initUI() {
+        yesRadioBtn = findViewById(R.id.yes_radio);
+        noRadioBtn = findViewById(R.id.no_radio);
+        radioGroup = findViewById(R.id.radioGroup);
+        backPackageDelivery = findViewById(R.id.backPackageDelivery);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +33,8 @@ public class PackageDeliveryActivity extends AppCompatActivity {
 
 //      typecasting
         initUI();
-//        on click events
 
+//        on click events
         onClickListener();
     }
 
@@ -36,10 +43,13 @@ public class PackageDeliveryActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (yesRadioBtn.isChecked()) {
+
                     startActivity(new Intent(PackageDeliveryActivity.this, SignatureActivity.class));
                 }
                 if (noRadioBtn.isChecked()) {
-                    startActivity(new Intent(PackageDeliveryActivity.this, NotifyActivity.class));
+                    Intent intent = new Intent(PackageDeliveryActivity.this, NotifyActivity.class);
+                    intent.putExtra("no_sign","no_sign");
+                    startActivity(intent);
                 }
             }
         });
@@ -49,12 +59,6 @@ public class PackageDeliveryActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-    }
-    private void initUI() {
-        yesRadioBtn = findViewById(R.id.yes_radio);
-        noRadioBtn = findViewById(R.id.no_radio);
-        radioGroup = findViewById(R.id.radioGroup);
-        backPackageDelivery = findViewById(R.id.backPackageDelivery);
     }
 
 }
