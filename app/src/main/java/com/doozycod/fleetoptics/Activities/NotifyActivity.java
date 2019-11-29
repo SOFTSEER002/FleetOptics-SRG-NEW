@@ -66,7 +66,7 @@ public class NotifyActivity extends AppCompatActivity {
 //                    "Thank you for stopping by!");
             appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), getIntent().getStringExtra("co_name"),
                     getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, getIntent().getStringExtra("empId"));
-            return;
+//            return;
         }
         if (getIntent().hasExtra("interview")) {
             String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
@@ -77,19 +77,19 @@ public class NotifyActivity extends AppCompatActivity {
 //            message2.setText("Sorry. No one is available for your interview at this time. Your details have been submitted – HR will contact you as soon as possible.");
             appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), "",
                     getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, "2");
-            return;
+//            return;
         }
         if (getIntent().hasExtra("signature")) {
             message.setText("The recipient has been notified… Please wait.");
             message2.setText("Someone will be with you shortly to receive the package… Thank You!");
-            return;
+//            return;
         }
 //        if user is returning from multiple visitor section
 
         if (getIntent().hasExtra("no_sign")) {
             message.setText("Please leave the package here, Thank You!");
             message2.setText("");
-            return;
+//            return;
         }
 //        if visitor is delivering something
         else {
