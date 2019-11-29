@@ -85,9 +85,15 @@ public class InterviewActivity extends AppCompatActivity {
                 }
 //                start camera activity
                 else {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-                    String currentDateandTime = sdf.format(new Date());
-                    startActivity(new Intent(InterviewActivity.this, CameraActivity.class));
+
+                    Intent intent =new Intent(InterviewActivity.this, CameraActivity.class);
+                    intent.putExtra("InterviewActivity","InterviewActivity");
+                    intent.putExtra("CheckinType","Visit Employee/Appointment");
+                    intent.putExtra("purpose_of_visit","Interview");
+                    intent.putExtra("fullname",visitorName.getText().toString());
+                    intent.putExtra("email",visitorEmail.getText().toString());
+                    intent.putExtra("phone",visitorPhoneNo.getText().toString());
+                    startActivity(intent);
                 }
             }
         });

@@ -19,6 +19,11 @@
             android:layout_marginLeft="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:padding="10dp"
+            android:layout_marginBottom="2dp"
             android:text="user Name"/>
+        <View
+            android:layout_width="match_parent"
+            android:background="#D3D3D3"
+            android:layout_height="2dp"/>
     </LinearLayout>
 </RelativeLayout>

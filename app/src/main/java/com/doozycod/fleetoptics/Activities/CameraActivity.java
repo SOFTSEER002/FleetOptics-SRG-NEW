@@ -1,7 +1,6 @@
 package com.doozycod.fleetoptics.Activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,6 +12,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -66,14 +66,14 @@ public class CameraActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Please smile we will take a picture of yours in 5 seconds!", Toast.LENGTH_SHORT).show();
 //        call view callback to cameraView
-        if(mCameraView != null) {
+        if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
 
         }
 
     }
 
-//on click listener method
+    //on click listener method
     private void ClickListeners() {
         handler = new Handler();
         handler.postDelayed(runnable = new Runnable() {
@@ -94,19 +94,17 @@ public class CameraActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
-// stop caemra view in pause state
+    // stop caemra view in pause state
     @Override
     protected void onPause() {
-        Log.d("onPuase", "onPause called");
+        Log.d("onPause", "onPause called");
         mCameraView.stop();
         super.onPause();
     }
 
-//    start cameraView on activity resume state
+    //    start cameraView on activity resume state
     @Override
     protected void onResume() {
         super.onResume();
@@ -119,7 +117,7 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-//    CameraView callback
+    //    CameraView callback
     private CameraView.Callback mCallback = new CameraView.Callback() {
 
         @Override
@@ -132,7 +130,7 @@ public class CameraActivity extends AppCompatActivity {
             Log.d("HomeActivity", "onCameraClosed");
         }
 
-//        create visitor photo
+        //        create visitor photo
         @Override
         public void onPictureTaken(CameraView cameraView, final byte[] data) {
             Log.d("HomeActivity", "onPictureTaken " + data.length);
@@ -209,8 +207,13 @@ public class CameraActivity extends AppCompatActivity {
                 values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
                 values.put(MediaStore.MediaColumns.DATA,
                         imageFile.getAbsolutePath());
+                Bitmap bm = BitmapFactory.decodeFile(imageFile + "");
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+                byte[] byteArrayImage = baos.toByteArray();
 
-                setResult(Activity.RESULT_OK); //add this
+                String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+//                setResult(Activity.RESULT_OK); //add this
                 if (!TextUtils.isEmpty(imageFile.getAbsolutePath())) {
                     Log.e("HomeActivity", "onPictureTaken: " + "Image saved to gallery!" + imageFile.getAbsolutePath());
 
@@ -218,13 +221,39 @@ public class CameraActivity extends AppCompatActivity {
 //                    Intent intent = new Intent(CameraActivity.this, VisitorRegisterActivity.class);
 //                    intent.putExtra("picture", "yess");
 //                    startActivity(intent);
-                    finish();
+                    if (getIntent().hasExtra("InterviewActivity")) {
+                        Intent intent = new Intent(CameraActivity.this, NotifyActivity.class);
+                        intent.putExtra("interview", "yess");
+                        intent.putExtra("checkin", getIntent().getStringExtra("CheckinType"));
+                        intent.putExtra("name", getIntent().getStringExtra("fullname"));
+//                        intent.putExtra("base_image", encodedImage);
+                        intent.putExtra("purpose", getIntent().getStringExtra("purpose_of_visit"));
+                        intent.putExtra("emailID", getIntent().getStringExtra("email"));
+                        intent.putExtra("phone_no", getIntent().getStringExtra("phone"));
+                        startActivity(intent);
+                        finish();
+                    }
+                    if (getIntent().hasExtra("appointment")) {
+                        Log.e("HERE", "onPictureTaken: " );
+                        Intent intent = new Intent(CameraActivity.this, NotifyActivity.class);
+                        intent.putExtra("appointment1", "appointment");
+                        intent.putExtra("checkin", getIntent().getStringExtra("checkinType"));
+                        intent.putExtra("name", getIntent().getStringExtra("fullname"));
+                        if (getIntent().hasExtra("company_name")) {
+                            intent.putExtra("co_name", getIntent().getStringExtra("company_name"));
+                        }
+                        intent.putExtra("empId", getIntent().getStringExtra("id"));
+                        intent.putExtra("purpose", getIntent().getStringExtra("purpose_of_visit"));
+                        intent.putExtra("emailID", getIntent().getStringExtra("email"));
+                        intent.putExtra("phone_no", getIntent().getStringExtra("phone"));
+                        startActivity(intent);
+                        finish();
+                    }
 
                 } else {
                     Log.e("HomeActivity", "onPictureTaken: " + "Unable to save image!");
 
                 }
-//                        finish();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -238,14 +267,15 @@ public class CameraActivity extends AppCompatActivity {
         return compressedByteArray;
     }
 
-//    start CheckInVisitActivity
+    //    start CheckInVisitActivity
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(CameraActivity.this, CheckInVisitActivity.class));
+//        startActivity(new Intent(CameraActivity.this, CheckInVisitActivity.class));
+        handler.removeCallbacks(runnable);
         super.onBackPressed();
     }
 
-//          resize bitmap in less size
+    //          resize bitmap in less size
     private Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
 
         if (maxHeight > 0 && maxWidth > 0) {

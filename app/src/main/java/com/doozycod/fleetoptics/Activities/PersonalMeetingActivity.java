@@ -19,12 +19,20 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.doozycod.fleetoptics.Model.AppointmentResultModel;
 import com.doozycod.fleetoptics.R;
+import com.doozycod.fleetoptics.Service.ApiService;
+import com.doozycod.fleetoptics.Service.ApiUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.view.View.VISIBLE;
 import static com.doozycod.fleetoptics.R.drawable.et_bg;
@@ -39,6 +47,7 @@ public class PersonalMeetingActivity extends AppCompatActivity {
     int numberOfbtns = 100;
     ImageView AddPeopleBtn;
     List<EditText> allEds = new ArrayList<EditText>();
+    ApiService apiService;
 
     //    typecasting method
     private void initUI() {
@@ -74,6 +83,8 @@ public class PersonalMeetingActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 //        typecasting
         initUI();
+
+        apiService = ApiUtils.getAPIService();
 //        change visibility for finish button and submit button
         submitInterButton.setEnabled(false);
         AddPeopleBtn.setVisibility(View.GONE);
@@ -82,7 +93,6 @@ public class PersonalMeetingActivity extends AppCompatActivity {
 
 //      click listener
         clickListeners();
-
     }
 
     //      Dynamic Edit Text Method
@@ -208,27 +218,97 @@ public class PersonalMeetingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
                 String currentDateandTime = sdf.format(new Date());
+                String company = "";
+                if (companyName.getText().toString().equals("")) {
+                    company = "NA";
+                } else {
+                    company = companyName.getText().toString();
+                }
 //                add dynamic editext data into Arraylist
                 String[] strings = new String[allEds.size()];
                 for (int i = 0; i < allEds.size(); i++) {
                     strings[i] = allEds.get(i).getText().toString();
                     Log.e("onClick!", "onClick: " + strings[i]);
                 }
-
-                if (checkMultipleVisitor.isChecked()) {
-                    Intent intent = new Intent(PersonalMeetingActivity.this, NotifyActivity.class);
-                    intent.putExtra("multiple", "multiple");
-                    startActivity(intent);
+//                String name;
+                if (getIntent().hasExtra("camera1")) {
+//                    appointmentAPI("Appointment", "Meeting", fullnameArray, company, emailAddress.getText().toString(), visitorPhoneNo.getText().toString(), currentDateandTime, "");
                 } else {
-                    if (!checkMultipleVisitor.isChecked()) {
-                        Intent intent = new Intent(PersonalMeetingActivity.this, NotifyActivity.class);
-                        intent.putExtra("multiple", "multiple");
+                    if (checkMultipleVisitor.isChecked()) {
+                        String[] fullnameArray = new String[allEds.size() + 1];
+                        for (int i = 0; i < allEds.size() + 1; i++) {
+                            if (i == 0) {
+                                fullnameArray[i] = visitorFullName.getText().toString();
+//                                name = visitorFullName.getText().toString() + ",";
+                            } else {
+                                fullnameArray[i] = allEds.get(i - 1).getText().toString();
+//                            name = name+allEds.get(i - 1).getText().toString()+",";
+                            }
+                        }
+
+                        for (int i = 0; i < fullnameArray.length; i++) {
+                            Log.e("Full Array", "onClick: Full Name " + fullnameArray[i]);
+                        }
+
+//                        appointmentAPI(getIntent().getStringExtra("purpose"), Arrays.toString(fullnameArray), company, emailAddress.getText().toString(), visitorPhoneNo.getText().toString(), currentDateandTime, "");
+
+                        Intent intent = new Intent(PersonalMeetingActivity.this, CameraActivity.class);
+                        intent.putExtra("appointment", "singleVisitor");
+                        if (getIntent().hasExtra("purpose")) {
+                            intent.putExtra("purpose_of_visit", getIntent().getStringExtra("purpose"));
+                        }
+                        intent.putExtra("id", getIntent().getStringExtra("empId"));
+                        intent.putExtra("company_name", company);
+                        intent.putExtra("checkinType", "Visit Employee/Appointment");
+                        intent.putExtra("fullname", Arrays.toString(fullnameArray));
+                        intent.putExtra("company_name", company);
+                        intent.putExtra("email", emailAddress.getText().toString());
+                        intent.putExtra("phone", visitorPhoneNo.getText().toString());
+
                         startActivity(intent);
                     } else {
-                        Toast.makeText(PersonalMeetingActivity.this, "Please tap finish first!", Toast.LENGTH_SHORT).show();
+                        if (!checkMultipleVisitor.isChecked()) {
+                            String[] fullnameArray = {visitorFullName.getText().toString()};
+//                            appointmentAPI(getIntent().getStringExtra("purpose"), Arrays.toString(fullnameArray), company, emailAddress.getText().toString(), visitorPhoneNo.getText().toString(), currentDateandTime, "");
+
+                            Intent intent = new Intent(PersonalMeetingActivity.this, CameraActivity.class);
+                            intent.putExtra("appointment", "singleVisitor");
+                            intent.putExtra("company_name", company);
+                            if (getIntent().hasExtra("purpose")) {
+                                intent.putExtra("purpose_of_visit", getIntent().getStringExtra("purpose"));
+                            }
+                            intent.putExtra("id", getIntent().getStringExtra("empId"));
+                            intent.putExtra("checkinType", "Visit Employee/Appointment");
+                            intent.putExtra("fullname", Arrays.toString(fullnameArray));
+//                            intent.putExtra("name", visitorFullName.getText().toString());
+                            intent.putExtra("email", emailAddress.getText().toString());
+                            intent.putExtra("phone", visitorPhoneNo.getText().toString());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(PersonalMeetingActivity.this, "Please tap finish first!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
         });
     }
+
+//    void appointmentAPI(String purpose_of_visit, String fullname, String company_name, String email_address, String phone_no, String timestamp, String image) {
+//
+//        Log.e("appointmentAPI", "Array: " + fullname);
+//        apiService.appointment("Visit Employee/Appointment", purpose_of_visit, fullname, company_name, email_address, phone_no, timestamp, image).enqueue(new Callback<AppointmentResultModel>() {
+//            @Override
+//            public void onResponse(Call<AppointmentResultModel> call, Response<AppointmentResultModel> response) {
+//                if (response.isSuccessful()) {
+//                    Log.e("REsponse", "onResponse: " + response.body().getMessage());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AppointmentResultModel> call, Throwable t) {
+//                Log.e("REsponse", "onResponse: On Fail" + t.getMessage());
+//            }
+//        });
+//    }
 }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="10dp"
+    android:background="#fff"
     tools:context=".Activities.CheckInVisitActivity">
     <TextView
         android:layout_width="wrap_content"
@@ -105,15 +106,21 @@
                 android:layout_height="wrap_content"
                 android:text="FLEETOPTICS DIRECTORY"
                 android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0F0F0"
+                android:minHeight="200dp">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="15dp"
-                android:layout_below="@+id/searchBar_ET"
                 android:id="@+id/visitor_listview"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"/>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
