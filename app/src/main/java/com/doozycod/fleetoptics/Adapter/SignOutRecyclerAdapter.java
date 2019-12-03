@@ -54,10 +54,6 @@ public class SignOutRecyclerAdapter extends RecyclerView.Adapter<SignOutRecycler
         notifyDataSetChanged();
     }
 
-    void setCallbackListener(CallbackListener callbackListener) {
-        this.callbackListener = callbackListener;
-    }
-
     @Override
     public int getItemCount() {
         return visitorsList.size();

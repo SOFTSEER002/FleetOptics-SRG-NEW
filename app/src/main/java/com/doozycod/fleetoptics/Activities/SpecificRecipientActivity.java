@@ -139,6 +139,7 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
 
     }
 
+    //    get All Employees Api
     void getEmployees() {
         customProgressBar.showProgress();
         apiService.getAllEmployees().enqueue(new Callback<GetEmployeeModel>() {
@@ -158,15 +159,20 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
 
             @Override
             public void onFailure(Call<GetEmployeeModel> call, Throwable t) {
-
+                customProgressBar.hideProgress();
+                Toast.makeText(SpecificRecipientActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     void getPackageDelivered(String CheckinType, String deliverToWhom, String isSignReq, String isSpecificPerson) {
+        customProgressBar.showProgress();
+
         apiService.packageDelivery(CheckinType, deliverToWhom, isSignReq, isSpecificPerson).enqueue(new Callback<ResultModel>() {
             @Override
             public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                customProgressBar.hideProgress();
+
                 if (response.isSuccessful()) {
                     if (response.body().getType().equals("success")) {
                         Toast.makeText(SpecificRecipientActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -181,6 +187,8 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
 
             @Override
             public void onFailure(Call<ResultModel> call, Throwable t) {
+                customProgressBar.hideProgress();
+
                 Toast.makeText(SpecificRecipientActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }

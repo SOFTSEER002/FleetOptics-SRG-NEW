@@ -42,8 +42,10 @@ public class PackageDeliveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_package_delivery);
         getSupportActionBar().hide();
 
+//        progressbar
         customProgressBar = new CustomProgressBar(this);
 
+//        apiservice
         apiService = ApiUtils.getAPIService();
 //      typecasting
         initUI();
@@ -72,6 +74,7 @@ public class PackageDeliveryActivity extends AppCompatActivity {
         });
     }
 
+//    Package Delivery Api
     void getPackageDelivered(String CheckinType, String deliverToWhom, String isSignReq, String isSpecificPerson) {
         customProgressBar.showProgress();
         apiService.packageDelivery(CheckinType, deliverToWhom, isSignReq, isSpecificPerson).enqueue(new Callback<ResultModel>() {

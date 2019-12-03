@@ -48,7 +48,10 @@ public class NotifyActivity extends AppCompatActivity {
 //         typecasting
         initUI();
 
+//          progress bar
         customProgressBar = new CustomProgressBar(this);
+
+//        api service
         apiService = ApiUtils.getAPIService();
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
@@ -111,6 +114,7 @@ public class NotifyActivity extends AppCompatActivity {
         }, 10000);
     }
 
+//    convert image to bitmap,bitmap to bytes
     private byte[] convert() {
         Bitmap bm = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/FleetOptics/" + "visitor.png");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -125,6 +129,7 @@ public class NotifyActivity extends AppCompatActivity {
         finishAffinity();*/
     }
 
+//    appointment api for visitor
     void appointmentAPI(String checkinType, String purpose_of_visit, String fullname, String company_name, String email_address, String phone_no, String timestamp, String image, String empId) {
         customProgressBar.showProgress();
         Log.e("appointmentAPI", "Array: " + fullname + empId);

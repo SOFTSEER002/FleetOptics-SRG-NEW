@@ -34,6 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return new RecyclerHolder(view);
     }
 
+//      on search user name update list of employees
     public void updateList(List<GetEmployeeModel.employees> list) {
         employeesList = list;
         notifyDataSetChanged();

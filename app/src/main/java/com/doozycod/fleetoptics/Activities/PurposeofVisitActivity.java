@@ -65,12 +65,16 @@ public class PurposeofVisitActivity extends AppCompatActivity implements Callbac
         getSupportActionBar().hide();
         initUI();
         onClickListener();
+//        api service
         apiService = ApiUtils.getAPIService();
+
 
         sumbitEmpBtn.setEnabled(false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+//        progressbar
         customProgressBar = new CustomProgressBar(this);
 //          get Employee data
         getEmployees();
@@ -189,6 +193,7 @@ public class PurposeofVisitActivity extends AppCompatActivity implements Callbac
         });
     }
 
+//    get employee from api
     void filter(String text) {
         List<GetEmployeeModel.employees> temp = new ArrayList();
         for (GetEmployeeModel.employees d : getEmployeeModels) {
@@ -202,6 +207,8 @@ public class PurposeofVisitActivity extends AppCompatActivity implements Callbac
         recyclerAdapter.updateList(temp);
     }
 
+
+//    get All Employees api
     void getEmployees() {
         customProgressBar.showProgress();
         apiService.getAllEmployees().enqueue(new Callback<GetEmployeeModel>() {
@@ -226,6 +233,7 @@ public class PurposeofVisitActivity extends AppCompatActivity implements Callbac
         });
     }
 
+//    interface to get selected employee name and empID
     @Override
     public void onResultListener(String RecipientName, String id) {
         employeeName = RecipientName;

@@ -132,6 +132,7 @@ public class SignOutActivity extends AppCompatActivity implements CallbackListen
         });
     }
 
+//    signout visitor search by name
     void filter(String text) {
         List<GetCurrentVisitors.visitors> temp = new ArrayList();
         for (GetCurrentVisitors.visitors d : getCurrentVisitorsList) {
@@ -147,6 +148,7 @@ public class SignOutActivity extends AppCompatActivity implements CallbackListen
         }
     }
 
+//    signout Api
     void signOutVisitor(String visitorEmail, String timestamp) {
         customProgressBar.showProgress();
         apiService.signOutVisitor(visitorEmail, timestamp).enqueue(new Callback<ResultModel>() {

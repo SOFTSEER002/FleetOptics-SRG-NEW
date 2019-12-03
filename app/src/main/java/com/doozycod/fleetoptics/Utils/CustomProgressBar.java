@@ -21,6 +21,7 @@ public class CustomProgressBar {
 	/*
 	 * This method display a message or alert for any functionality
 	 */
+//	show progress bar method
 	public void showProgress() {
 		popDialog = new Dialog(context);
 		popDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,6 +33,7 @@ public class CustomProgressBar {
 		popDialog.show();
 	}
 
+//	Hide progress bar method
 	public void hideProgress() {
 
 		if (popDialog != null) {

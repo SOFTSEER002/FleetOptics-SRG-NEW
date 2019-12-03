@@ -295,22 +295,4 @@ public class PersonalMeetingActivity extends AppCompatActivity {
         });
     }
 
-//    void appointmentAPI(String purpose_of_visit, String fullname, String company_name, String email_address, String phone_no, String timestamp, String image) {
-//
-//        Log.e("appointmentAPI", "Array: " + fullname);
-//        apiService.appointment("Visit Employee/Appointment", purpose_of_visit, fullname, company_name, email_address, phone_no, timestamp, image).enqueue(new Callback<AppointmentResultModel>() {
-//            @Override
-//            public void onResponse(Call<AppointmentResultModel> call, Response<AppointmentResultModel> response) {
-//                if (response.isSuccessful()) {
-//                    Log.e("REsponse", "onResponse: " + response.body().getMessage());
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<AppointmentResultModel> call, Throwable t) {
-//                Log.e("REsponse", "onResponse: On Fail" + t.getMessage());
-//            }
-//        });
-//    }
 }

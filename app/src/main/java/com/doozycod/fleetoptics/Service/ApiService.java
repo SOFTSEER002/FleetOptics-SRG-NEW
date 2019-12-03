@@ -11,7 +11,10 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
+//  api Interface for Retrofit
 public interface ApiService {
+
+    //    set Appointment for visitor api and method
     @POST("visitor/setAppointment.php")
     @FormUrlEncoded
     Call<AppointmentResultModel> appointment(
@@ -25,18 +28,23 @@ public interface ApiService {
             @Field("image") String image,
             @Field("meet_to_whom") String meet_to_whom);
 
+    //    get All Employee api and method
     @GET("employee/getAllEmployees.php")
     Call<GetEmployeeModel> getAllEmployees();
 
+    //    get Current visitors api and method
     @GET("visitor/getCurrentVisitors.php")
     Call<GetCurrentVisitors> getCurrentVisitors();
 
+    //    signout api and method
     @POST("visitor/signOut.php")
     @FormUrlEncoded
     Call<ResultModel> signOutVisitor(
             @Field("email_address") String email_address,
             @Field("timestamp") String timestamp);
 
+
+    //    Deliver Package api and method
     @POST("package/setPackageDelivery.php")
     @FormUrlEncoded
     Call<ResultModel> packageDelivery(

@@ -62,8 +62,7 @@ public class SignatureActivity extends AppCompatActivity {
                     startActivity(new Intent(SignatureActivity.this, SpecificRecipientActivity.class));
                 }
                 if (noRadioBtn.isChecked()) {
-                    getPackageDelivered("Package Delivery","2","Yes","No");
-
+                    getPackageDelivered("Package Delivery", "2", "Yes", "No");
                 }
             }
         });
@@ -76,6 +75,7 @@ public class SignatureActivity extends AppCompatActivity {
         });
     }
 
+    //    Package Delivery Api
     void getPackageDelivered(String CheckinType, String deliverToWhom, String isSignReq, String isSpecificPerson) {
         customProgressBar.showProgress();
         apiService.packageDelivery(CheckinType, deliverToWhom, isSignReq, isSpecificPerson).enqueue(new Callback<ResultModel>() {

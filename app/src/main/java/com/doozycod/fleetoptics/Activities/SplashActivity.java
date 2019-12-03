@@ -33,6 +33,7 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
 
         mainLayout = findViewById(R.id.splash);
         text_signin = findViewById(R.id.text_signin);
+
         //        Animation
         animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.fade_in);
