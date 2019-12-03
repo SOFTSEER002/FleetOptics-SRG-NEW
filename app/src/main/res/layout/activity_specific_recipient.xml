@@ -5,13 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.SpecificRecipientActivity">
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:padding="5dp"
+        android:text="@string/quick_search_txt"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    <EditText
+        android:layout_below="@id/text"
+        android:id="@+id/editTextsearchbarSpecific"
+        android:paddingLeft="20dp"
+        android:paddingTop="2dp"
+        android:layout_marginTop="15dp"
+        android:paddingBottom="5dp"
+        android:hint="Quick Search"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/et_bg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_margin="5dp"
+        android:background="#F1F1F1"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/editTextsearchbarSpecific"
         android:layout_above="@+id/submitButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content" />
     <Button
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"

@@ -258,6 +258,7 @@ public class PersonalMeetingActivity extends AppCompatActivity {
                             intent.putExtra("purpose_of_visit", getIntent().getStringExtra("purpose"));
                         }
                         intent.putExtra("id", getIntent().getStringExtra("empId"));
+                        intent.putExtra("emp", getIntent().getStringExtra("empName"));
                         intent.putExtra("company_name", company);
                         intent.putExtra("checkinType", "Visit Employee/Appointment");
                         intent.putExtra("fullname", Arrays.toString(fullnameArray));
@@ -278,6 +279,7 @@ public class PersonalMeetingActivity extends AppCompatActivity {
                                 intent.putExtra("purpose_of_visit", getIntent().getStringExtra("purpose"));
                             }
                             intent.putExtra("id", getIntent().getStringExtra("empId"));
+                            intent.putExtra("emp", getIntent().getStringExtra("empName"));
                             intent.putExtra("checkinType", "Visit Employee/Appointment");
                             intent.putExtra("fullname", Arrays.toString(fullnameArray));
 //                            intent.putExtra("name", visitorFullName.getText().toString());

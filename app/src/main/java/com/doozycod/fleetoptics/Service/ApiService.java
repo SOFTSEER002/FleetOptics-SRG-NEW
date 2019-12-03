@@ -1,7 +1,9 @@
 package com.doozycod.fleetoptics.Service;
 
 import com.doozycod.fleetoptics.Model.AppointmentResultModel;
+import com.doozycod.fleetoptics.Model.GetCurrentVisitors;
 import com.doozycod.fleetoptics.Model.GetEmployeeModel;
+import com.doozycod.fleetoptics.Model.ResultModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -25,4 +27,22 @@ public interface ApiService {
 
     @GET("employee/getAllEmployees.php")
     Call<GetEmployeeModel> getAllEmployees();
+
+    @GET("visitor/getCurrentVisitors.php")
+    Call<GetCurrentVisitors> getCurrentVisitors();
+
+    @POST("visitor/signOut.php")
+    @FormUrlEncoded
+    Call<ResultModel> signOutVisitor(
+            @Field("email_address") String email_address,
+            @Field("timestamp") String timestamp);
+
+    @POST("package/setPackageDelivery.php")
+    @FormUrlEncoded
+    Call<ResultModel> packageDelivery(
+            @Field("checkin_type") String checkin_type,
+            @Field("deliver_to_whom") String deliver_to_whom,
+            @Field("is_sig_required") String is_sig_required,
+            @Field("is_spec_person") String is_spec_person);
+
 }

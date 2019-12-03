@@ -43,7 +43,7 @@ public class CheckinTypeActivity extends AppCompatActivity {
         checkInVisitor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CheckinTypeActivity.this,CheckInVisitActivity.class));
+                startActivity(new Intent(CheckinTypeActivity.this, PurposeofVisitActivity.class));
             }
         });
 //        finish activity

@@ -116,7 +116,6 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
-
     //    CameraView callback
     private CameraView.Callback mCallback = new CameraView.Callback() {
 
@@ -243,6 +242,7 @@ public class CameraActivity extends AppCompatActivity {
                             intent.putExtra("co_name", getIntent().getStringExtra("company_name"));
                         }
                         intent.putExtra("empId", getIntent().getStringExtra("id"));
+                        intent.putExtra("empName", getIntent().getStringExtra("emp"));
                         intent.putExtra("purpose", getIntent().getStringExtra("purpose_of_visit"));
                         intent.putExtra("emailID", getIntent().getStringExtra("email"));
                         intent.putExtra("phone_no", getIntent().getStringExtra("phone"));
@@ -267,10 +267,10 @@ public class CameraActivity extends AppCompatActivity {
         return compressedByteArray;
     }
 
-    //    start CheckInVisitActivity
+    //    start PurposeofVisitActivity
     @Override
     public void onBackPressed() {
-//        startActivity(new Intent(CameraActivity.this, CheckInVisitActivity.class));
+//        startActivity(new Intent(CameraActivity.this, PurposeofVisitActivity.class));
         handler.removeCallbacks(runnable);
         super.onBackPressed();
     }

@@ -27,12 +27,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         this.employeesList = employeesList;
         this.callbackListener = callbackListener;
     }
-
     @NonNull
     @Override
     public RecyclerAdapter.RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recycler_view, parent, false);
-
         return new RecyclerHolder(view);
     }
 

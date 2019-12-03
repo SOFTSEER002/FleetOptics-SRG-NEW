@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <CheckBox
+        <TextView
             android:id="@+id/emp_nameSignout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

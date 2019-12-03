@@ -1,13 +1,10 @@
 package com.doozycod.fleetoptics.Activities;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,9 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +24,7 @@ import com.doozycod.fleetoptics.Model.GetEmployeeModel;
 import com.doozycod.fleetoptics.R;
 import com.doozycod.fleetoptics.Service.ApiService;
 import com.doozycod.fleetoptics.Service.ApiUtils;
+import com.doozycod.fleetoptics.Utils.CustomProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CheckInVisitActivity extends AppCompatActivity implements CallbackListener {
+public class PurposeofVisitActivity extends AppCompatActivity implements CallbackListener {
     RadioGroup radioGroup;
     RadioButton meetingRadioBtn, interviewRadioBtn, personalRadioBtn;
     EditText search_emp;
@@ -47,7 +43,8 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
     RecyclerAdapter recyclerAdapter;
     ApiService apiService;
     List<GetEmployeeModel.employees> getEmployeeModels = new ArrayList<>();
-    String employeeName, empId;
+    String employeeName = "", empId = "";
+    CustomProgressBar customProgressBar;
 
     private void initUI() {
         search_emp = findViewById(R.id.editTextsearchbar);
@@ -70,10 +67,11 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
         onClickListener();
         apiService = ApiUtils.getAPIService();
 
-
+        sumbitEmpBtn.setEnabled(false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        customProgressBar = new CustomProgressBar(this);
 //          get Employee data
         getEmployees();
     }
@@ -88,6 +86,7 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
                     if (!search_emp.isEnabled()) {
                         search_emp.setText("");
                     }
+                    sumbitEmpBtn.setEnabled(false);
                     search_emp.setEnabled(true);
                     recyclerView.setEnabled(true);
                     meetingRadioBtn.setChecked(true);
@@ -96,8 +95,12 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
 
                 }
                 if (interviewRadioBtn.isChecked()) {
+
                     purpose = "Drop-in Interview";
                     search_emp.setText("");
+
+                    sumbitEmpBtn.setEnabled(true);
+
                     search_emp.setEnabled(false);
                     recyclerView.setEnabled(false);
                     meetingRadioBtn.setChecked(false);
@@ -110,6 +113,8 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
                     if (!search_emp.isEnabled()) {
                         search_emp.setText("");
                     }
+                    sumbitEmpBtn.setEnabled(false);
+
                     recyclerView.setEnabled(true);
                     meetingRadioBtn.setChecked(false);
                     interviewRadioBtn.setChecked(false);
@@ -155,27 +160,30 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
             public void onClick(View view) {
 //                if meeting is checked start EmpPersocalCheckin Activity
                 if (meetingRadioBtn.isChecked()) {
-                    Intent intent = new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class);
+                    Intent intent = new Intent(PurposeofVisitActivity.this, PersonalMeetingActivity.class);
                     intent.putExtra("purpose", "Meeting");
                     intent.putExtra("empId", empId);
+                    intent.putExtra("empName", employeeName);
                     startActivity(intent);
                     return;
                 }
 //                if interview is checked start Interview Activity
                 if (interviewRadioBtn.isChecked()) {
-                    Intent intent = new Intent(CheckInVisitActivity.this, InterviewActivity.class);
+
+                    Intent intent = new Intent(PurposeofVisitActivity.this, InterviewActivity.class);
                     intent.putExtra("purpose", "Interview");
                     startActivity(intent);
                     return;
                 }
 //                if personal is checked start EmpPersocalCheckin Activity
                 if (personalRadioBtn.isChecked()) {
-                    Intent intent = new Intent(CheckInVisitActivity.this, PersonalMeetingActivity.class);
+                    Intent intent = new Intent(PurposeofVisitActivity.this, PersonalMeetingActivity.class);
                     intent.putExtra("purpose", "Personal");
                     intent.putExtra("empId", empId);
+                    intent.putExtra("empName", employeeName);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(CheckInVisitActivity.this, "Select Visit Type", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PurposeofVisitActivity.this, "Select Visit Type", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -195,65 +203,27 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
     }
 
     void getEmployees() {
+        customProgressBar.showProgress();
         apiService.getAllEmployees().enqueue(new Callback<GetEmployeeModel>() {
             @Override
             public void onResponse(Call<GetEmployeeModel> call, Response<GetEmployeeModel> response) {
                 if (response.isSuccessful()) {
-
+                    customProgressBar.hideProgress();
                     getEmployeeModels = response.body().getEmployees();
                     for (int i = 0; i < getEmployeeModels.size(); i++) {
                         Log.e("Employee DATA", "onResponse: " + getEmployeeModels.get(i).getId());
-                        recyclerAdapter = new RecyclerAdapter(CheckInVisitActivity.this, getEmployeeModels, CheckInVisitActivity.this);
+                        recyclerAdapter = new RecyclerAdapter(PurposeofVisitActivity.this, getEmployeeModels, PurposeofVisitActivity.this);
 //                        recyclerView.setAdapter(recyclerAdapter);
-
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<GetEmployeeModel> call, Throwable t) {
-
+                Log.e("Employee DATA", "onResponse: " + t.getMessage());
+                customProgressBar.hideProgress();
+                Toast.makeText(PurposeofVisitActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    //create menu in actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_with_searchbar, menu);
-
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.searchView).getActionView();
-
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-//                filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                filter(newText);
-                return false;
-            }
-        });
-        return true;
-    }
-
-    // onback action back press finish activity
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.action_back:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -261,6 +231,8 @@ public class CheckInVisitActivity extends AppCompatActivity implements CallbackL
         employeeName = RecipientName;
         empId = id;
         Log.e("NAME", "onResultListener: " + employeeName + "  " + empId);
+        sumbitEmpBtn.setEnabled(true);
+        search_emp.setText(employeeName);
 
     }
 }

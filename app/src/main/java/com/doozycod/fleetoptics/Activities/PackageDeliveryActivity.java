@@ -7,15 +7,26 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.doozycod.fleetoptics.Model.ResultModel;
 import com.doozycod.fleetoptics.R;
+import com.doozycod.fleetoptics.Service.ApiService;
+import com.doozycod.fleetoptics.Service.ApiUtils;
+import com.doozycod.fleetoptics.Utils.CustomProgressBar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PackageDeliveryActivity extends AppCompatActivity {
     RadioButton yesRadioBtn, noRadioBtn;
     RadioGroup radioGroup;
     Button backPackageDelivery;
+    ApiService apiService;
+    CustomProgressBar customProgressBar;
 
     private void initUI() {
         yesRadioBtn = findViewById(R.id.yes_radio);
@@ -31,6 +42,9 @@ public class PackageDeliveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_package_delivery);
         getSupportActionBar().hide();
 
+        customProgressBar = new CustomProgressBar(this);
+
+        apiService = ApiUtils.getAPIService();
 //      typecasting
         initUI();
 
@@ -43,13 +57,10 @@ public class PackageDeliveryActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (yesRadioBtn.isChecked()) {
-
                     startActivity(new Intent(PackageDeliveryActivity.this, SignatureActivity.class));
                 }
                 if (noRadioBtn.isChecked()) {
-                    Intent intent = new Intent(PackageDeliveryActivity.this, NotifyActivity.class);
-                    intent.putExtra("no_sign","no_sign");
-                    startActivity(intent);
+                    getPackageDelivered("Package Delivery", "2", "No", "No");
                 }
             }
         });
@@ -57,6 +68,34 @@ public class PackageDeliveryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+    }
+
+    void getPackageDelivered(String CheckinType, String deliverToWhom, String isSignReq, String isSpecificPerson) {
+        customProgressBar.showProgress();
+        apiService.packageDelivery(CheckinType, deliverToWhom, isSignReq, isSpecificPerson).enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                customProgressBar.hideProgress();
+
+                if (response.isSuccessful()) {
+                    if (response.body().getType().equals("success")) {
+                        Toast.makeText(PackageDeliveryActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PackageDeliveryActivity.this, NotifyActivity.class);
+                        intent.putExtra("no_sign", "no_sign");
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(PackageDeliveryActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable t) {
+                Toast.makeText(PackageDeliveryActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                customProgressBar.hideProgress();
+
             }
         });
     }

@@ -31,7 +31,7 @@
             android:name=".Activities.SignatureActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Activities.CheckInVisitActivity"
+            android:name=".Activities.PurposeofVisitActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Activities.PackageDeliveryActivity"
