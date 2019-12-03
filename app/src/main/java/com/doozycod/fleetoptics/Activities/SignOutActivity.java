@@ -175,6 +175,7 @@ public class SignOutActivity extends AppCompatActivity implements CallbackListen
         });
     }
 
+//    get all Current visitors
     void getCurrentVisitors() {
         customProgressBar.showProgress();
         apiService.getCurrentVisitors().enqueue(new Callback<GetCurrentVisitors>() {
@@ -197,7 +198,7 @@ public class SignOutActivity extends AppCompatActivity implements CallbackListen
         });
 
     }
-
+//   get empName and empId
     @Override
     public void onResultListener(String RecipientName, String type) {
         visitorEmail = type;
