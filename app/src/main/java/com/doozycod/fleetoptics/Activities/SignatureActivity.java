@@ -45,7 +45,10 @@ public class SignatureActivity extends AppCompatActivity {
 //        hide action bar
         getSupportActionBar().hide();
 
+//        progress bar
         customProgressBar = new CustomProgressBar(this);
+
+//        api service
         apiService = ApiUtils.getAPIService();
 //        typecasting
         initUI();
