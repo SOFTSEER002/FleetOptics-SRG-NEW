@@ -9,7 +9,7 @@ import com.doozycod.fleetoptics.R;
 
 
 public class CustomProgressBar {
-	private Dialog popDialog;
+	public Dialog popDialog;
 	private Context context;
 
 	public CustomProgressBar(Context context) {

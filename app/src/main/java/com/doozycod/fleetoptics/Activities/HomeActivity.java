@@ -2,6 +2,7 @@ package com.doozycod.fleetoptics.Activities;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.doozycod.fleetoptics.R;
@@ -86,16 +88,22 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 //    permission for runtime using dexter!
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void permissionCheck() {
         Dexter.withActivity(this)
                 .withPermissions(
                         Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.ANSWER_PHONE_CALLS,
+                        Manifest.permission.USE_SIP,
+                        Manifest.permission.CALL_PHONE,
+                        Manifest.permission.WRITE_CALL_LOG,
+                        Manifest.permission.MODIFY_AUDIO_SETTINGS
                 ).withListener(new MultiplePermissionsListener() {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
-
             }
 
             @Override

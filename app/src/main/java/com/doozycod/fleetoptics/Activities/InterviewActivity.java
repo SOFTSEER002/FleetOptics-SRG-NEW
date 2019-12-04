@@ -13,9 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.doozycod.fleetoptics.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class InterviewActivity extends AppCompatActivity {
     CheckBox checkBox;
     Button submitButton, interBackBtn;
@@ -38,8 +35,10 @@ public class InterviewActivity extends AppCompatActivity {
 //        set Activity FULL SCREEN VIEW/ hide status
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_interview);
+
 //        hide action bar
         getSupportActionBar().hide();
+//        type casting
         initUI();
         checkinType = getIntent().getStringExtra("checkinType");
         submitButton.setEnabled(false);
@@ -83,16 +82,17 @@ public class InterviewActivity extends AppCompatActivity {
                     visitorEmail.setError("Please Enter Phone no");
                     return;
                 }
+
 //                start camera activity
                 else {
 
-                    Intent intent =new Intent(InterviewActivity.this, CameraActivity.class);
-                    intent.putExtra("InterviewActivity","InterviewActivity");
-                    intent.putExtra("CheckinType","Visit Employee/Appointment");
-                    intent.putExtra("purpose_of_visit","Interview");
-                    intent.putExtra("fullname",visitorName.getText().toString());
-                    intent.putExtra("email",visitorEmail.getText().toString());
-                    intent.putExtra("phone",visitorPhoneNo.getText().toString());
+                    Intent intent = new Intent(InterviewActivity.this, CameraActivity.class);
+                    intent.putExtra("InterviewActivity", "InterviewActivity");
+                    intent.putExtra("CheckinType", "Visit Employee/Appointment");
+                    intent.putExtra("purpose_of_visit", "Interview");
+                    intent.putExtra("fullname", visitorName.getText().toString());
+                    intent.putExtra("email", visitorEmail.getText().toString());
+                    intent.putExtra("phone", visitorPhoneNo.getText().toString());
                     startActivity(intent);
                 }
             }

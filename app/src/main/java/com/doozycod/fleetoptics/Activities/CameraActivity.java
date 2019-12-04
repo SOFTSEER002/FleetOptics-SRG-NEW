@@ -116,6 +116,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
+
     //    CameraView callback
     private CameraView.Callback mCallback = new CameraView.Callback() {
 
@@ -233,7 +234,7 @@ public class CameraActivity extends AppCompatActivity {
                         finish();
                     }
                     if (getIntent().hasExtra("appointment")) {
-                        Log.e("HERE", "onPictureTaken: " );
+                        Log.e("HERE", "onPictureTaken: ");
                         Intent intent = new Intent(CameraActivity.this, NotifyActivity.class);
                         intent.putExtra("appointment1", "appointment");
                         intent.putExtra("checkin", getIntent().getStringExtra("checkinType"));
