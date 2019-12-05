@@ -10,6 +10,17 @@ public class ResultModel {
     @SerializedName("type")
     @Expose
     String type;
+    @SerializedName("employee_contact")
+    @Expose
+    String employee_contact;
+
+    public String getEmployee_contact() {
+        return employee_contact;
+    }
+
+    public void setEmployee_contact(String employee_contact) {
+        this.employee_contact = employee_contact;
+    }
 
     public String getMessage() {
         return message;

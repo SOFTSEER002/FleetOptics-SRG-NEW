@@ -19,6 +19,7 @@ public class InterviewActivity extends AppCompatActivity {
     EditText visitorName, visitorEmail, visitorPhoneNo;
     String checkinType;
 
+
     //    typecasting method
     private void initUI() {
         checkBox = findViewById(R.id.checkBox);
@@ -85,7 +86,6 @@ public class InterviewActivity extends AppCompatActivity {
 
 //                start camera activity
                 else {
-
                     Intent intent = new Intent(InterviewActivity.this, CameraActivity.class);
                     intent.putExtra("InterviewActivity", "InterviewActivity");
                     intent.putExtra("CheckinType", "Visit Employee/Appointment");
@@ -98,6 +98,5 @@ public class InterviewActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }

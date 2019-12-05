@@ -178,6 +178,7 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
                         Toast.makeText(SpecificRecipientActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SpecificRecipientActivity.this, NotifyActivity.class);
                         intent.putExtra("Specific", empName);
+                        intent.putExtra("empPhoneNo", response.body().getEmployee_contact());
                         startActivity(intent);
                     } else {
                         Toast.makeText(SpecificRecipientActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();

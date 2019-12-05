@@ -13,7 +13,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,13 +50,14 @@ public class NotifyActivity extends AppCompatActivity {
     boolean isRunning = false;
     boolean isSpeaked = false;
     RippleBackground rippleBackground;
+    String empContactNumber = "";
 
     //    typecasting method
     private void initUI() {
         message = findViewById(R.id.message);
         message2 = findViewById(R.id.message2);
         rippleBackground = findViewById(R.id.content);
-        ImageView imageView = (ImageView) findViewById(R.id.centerImage);
+//        ImageView imageView = (ImageView) findViewById(R.id.centerImage);
     }
 
     @SuppressLint("SetTextI18n")
@@ -69,6 +69,7 @@ public class NotifyActivity extends AppCompatActivity {
 
 //        hide actionbar
         getSupportActionBar().hide();
+
 //         typecasting
         initUI();
 
@@ -91,10 +92,10 @@ public class NotifyActivity extends AppCompatActivity {
             message.setText("Please leave the package here, Thank You!");
             message2.setText("");
             rippleBackground.setVisibility(View.GONE);
+            delayToHome();
 //            return;
         } else {
-//            start Voip call
-            voipCallStart();
+
         }
         myRunnable = new Runnable() {
             @Override
@@ -105,6 +106,34 @@ public class NotifyActivity extends AppCompatActivity {
             }
         };
 
+        if (getIntent().hasExtra("Specific")) {
+//
+            empContactNumber = getIntent().getStringExtra("empPhoneNo");
+            //            start Voip call
+            voipCallStart();
+        }
+        if (getIntent().hasExtra("signature")) {
+            empContactNumber = getIntent().getStringExtra("empPhoneNo");
+//            start Voip call
+            voipCallStart();
+        }
+        if (getIntent().hasExtra("appointment1")) {
+            String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
+            Log.e("encodedImage", "onCreate: " + encodedImage);
+//            message.setText("Please Wait...");
+
+            appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), getIntent().getStringExtra("co_name"),
+                    getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, getIntent().getStringExtra("empId"));
+
+        }
+        if (getIntent().hasExtra("interview")) {
+            String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
+//            message.setText("Please Wait…");
+
+            appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), "",
+                    getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, "2");
+//            return;
+        }
     }
 
     //    convert image to bitmap,bitmap to bytes
@@ -136,10 +165,10 @@ public class NotifyActivity extends AppCompatActivity {
                     Thread.currentThread().setPriority(4);
                 } catch (Throwable e) {
                     e.printStackTrace();
-                }  //we are lowering this thread priority a bit to give more chance for our main GUI thread
+                }
+                //we are lowering this thread priority a bit to give more chance for our main GUI thread
 
                 while (!terminateNotifThread) {
-
                     try {
                         sipnotifications = "";
                         if (mysipclient != null) {
@@ -153,7 +182,6 @@ public class NotifyActivity extends AppCompatActivity {
                                 messageToMainThread.what = 0;
                                 messageData.putString("notifmessages", sipnotifications);
                                 messageToMainThread.setData(messageData);
-
                                 NotifThreadHandler.sendMessage(messageToMainThread);
                             }
                         }
@@ -162,7 +190,6 @@ public class NotifyActivity extends AppCompatActivity {
                             //some error occured. sleep a bit just to be sure to avoid busy loop
                             GetNotificationsThread.sleep(1);
                         }
-
                         continue;
                     } catch (Throwable e) {
                         Log.e(LOGTAG, "ERROR, WorkerThread on run()intern", e);
@@ -206,11 +233,16 @@ public class NotifyActivity extends AppCompatActivity {
 
         if (notarray == null || notarray.length < 1) return;
 
-        for (int i = 0; i < notarray.length; i++) {
+        for (String s : notarray) {
+            if (s != null && s.length() > 0) {
+                ProcessNotifications(s);
+            }
+        }
+        /*for (int i = 0; i < notarray.length; i++) {
             if (notarray[i] != null && notarray[i].length() > 0) {
                 ProcessNotifications(notarray[i]);
             }
-        }
+        }*/
     }
 
     @Override
@@ -226,9 +258,9 @@ public class NotifyActivity extends AppCompatActivity {
         notifThread = null;
     }
 
-
     //    VOIP call method
     void voipCallStart() {
+        Log.e(LOGTAG, "voipCallStart: empContactNumber " + empContactNumber);
         DisplayLogs("Start on click");
         try {
             // start SipStack if it's not already running
@@ -253,7 +285,7 @@ public class NotifyActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mysipclient.Call(-1, "7001");
+                        mysipclient.Call(-1, empContactNumber);
                         mysipclient.SetSpeakerMode(!mysipclient.IsLoudspeaker());
                     }
                 }, 1500);
@@ -306,16 +338,16 @@ public class NotifyActivity extends AppCompatActivity {
                 Log.e("encodedImage", "onCreate: " + encodedImage);
                 message.setText("Please Wait...");
 
-                appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), getIntent().getStringExtra("co_name"),
-                        getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, getIntent().getStringExtra("empId"));
+//                appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), getIntent().getStringExtra("co_name"),
+//                        getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, getIntent().getStringExtra("empId"));
 
             }
             if (getIntent().hasExtra("interview")) {
                 String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
                 message.setText("Please Wait…");
 
-                appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), "",
-                        getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, "2");
+//                appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), "",
+//                        getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, "2");
 //            return;
             }
         }
@@ -324,105 +356,77 @@ public class NotifyActivity extends AppCompatActivity {
         if (stat.contains("Speaking (")) {
             rippleBackground.stopRippleAnimation();
             rippleBackground.setVisibility(View.GONE);
-//            customProgressBar.hideProgress();
-           /* if (customProgressBar.popDialog.isShowing()) {
-                customProgressBar.hideProgress();
-            }*/
+
             Log.e(LOGTAG, "DisplayStatus: Speaking");
             if (getIntent().hasExtra("Specific")) {
 
                 message.setText("Someone will be with you shortly to receive the package… Thank You!");
-//                go back to home screen
-//                delayToHome();
+
             }
             if (getIntent().hasExtra("signature")) {
 //                message.setText("Please wait while we retrieve someone for you.");
                 message.setText("Someone will be with you shortly to receive the package… Thank You!");
-                //                go back to home screen
-//                delayToHome();
+
             }
             if (getIntent().hasExtra("appointment1")) {
                 String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
                 Log.e("encodedImage", "onCreate: " + encodedImage);
                 message.setText(getIntent().getStringExtra("empName") + " has been notified and will be with you shortly… Thank You!");
-//                go back to home screen
-//                delayToHome();
-
             }
+
             if (getIntent().hasExtra("interview")) {
                 String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
                 message.setText("Someone will be with you shortly… Thank You!");
-//                go back to home screen
-//                delayToHome();
             }
             isSpeaked = true;
 
         }
 //        if call state is REJECTED OR NOT PICKED UP
         if (stat.contains("call rejected: Busy Here") || stat.contains("503 server failure Service Unavailable") || stat.contains("Service Unavailable")) {
-            if(rippleBackground.isRippleAnimationRunning()){
+            if (rippleBackground.isRippleAnimationRunning()) {
                 rippleBackground.stopRippleAnimation();
                 rippleBackground.setVisibility(View.GONE);
             }
 
-           /* if (customProgressBar.popDialog.isShowing()) {
-                customProgressBar.hideProgress();
-            }*/
             message.setTextColor(Color.RED);
             if (getIntent().hasExtra("Specific")) {
                 message.setText("Sorry. The recipient is not available at this time, Please try again later.");
-//                go back to home screen
-                delayToHome();
-
             }
             if (getIntent().hasExtra("signature")) {
 //                message.setText("Please wait while we retrieve someone for you.");
                 message.setText("Sorry. No one is available at this time, Please try again later.");
-//                go back to home screen
-                delayToHome();
-
             }
             if (getIntent().hasExtra("appointment1")) {
                 String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
                 Log.e("encodedImage", "onCreate: " + encodedImage);
                 message.setText("Sorry." + getIntent().getStringExtra("empName") + " is not available at this time.\n Please try again later." +
                         "\nThank you for stopping by!");
-//                go back to home screen
-                delayToHome();
 
             }
             if (getIntent().hasExtra("interview")) {
                 message.setText("Sorry. No one is available for your interview at this time.\n Your details have been submitted – HR will contact you as soon as possible.");
-//                go back to home screen
-                delayToHome();
 
             }
-//
+//                go back to home screen
+            delayToHome();
         }
 //        if call state is DISCONNECT
         if (stat.contains("Call duration: 0 sec") || stat.contains("Finished,") || stat.contains("Call Finished")) {
-            if(rippleBackground.isRippleAnimationRunning()){
+            if (rippleBackground.isRippleAnimationRunning()) {
                 rippleBackground.stopRippleAnimation();
                 rippleBackground.setVisibility(View.GONE);
             }
-            /*if (customProgressBar.popDialog.isShowing()) {
-                customProgressBar.hideProgress();
-            }*/
+
             message.setTextColor(Color.RED);
             if (isSpeaked) {
-                Log.e(LOGTAG, "DisplayStatus: Already Speaked" );
+                Log.e(LOGTAG, "DisplayStatus: Already Speaked");
             } else {
                 if (getIntent().hasExtra("Specific")) {
                     message.setText("Sorry. The recipient is not available at this time, Please try again later.");
-//                go back to home screen
-                    delayToHome();
-
                 }
                 if (getIntent().hasExtra("signature")) {
 //                message.setText("Please wait while we retrieve someone for you.");
                     message.setText("Sorry. No one is available at this time, Please try again later.");
-//                go back to home screen
-                    delayToHome();
 
                 }
                 if (getIntent().hasExtra("appointment1")) {
@@ -430,14 +434,10 @@ public class NotifyActivity extends AppCompatActivity {
                     Log.e("encodedImage", "onCreate: " + encodedImage);
                     message.setText("Sorry." + getIntent().getStringExtra("empName") + " is not available at this time.\n Please try again later." +
                             "\nThank you for stopping by!");
-//                go back to home screen
-                    delayToHome();
 
                 }
                 if (getIntent().hasExtra("interview")) {
                     message.setText("Sorry. No one is available for your interview at this time.\n Your details have been submitted – HR will contact you as soon as possible.");
-//                go back to home screen
-                    delayToHome();
 
                 }
             }
@@ -471,6 +471,14 @@ public class NotifyActivity extends AppCompatActivity {
             public void onResponse(Call<AppointmentResultModel> call, Response<AppointmentResultModel> response) {
                 if (response.isSuccessful()) {
                     Log.e("Response", "onResponse: " + response.body().getMessage());
+                    if (response.body().getEmployee_contact() != null) {
+                        empContactNumber = response.body().getEmployee_contact();
+                    } else {
+//                        HR Contact Number
+                        empContactNumber = "7001";
+                    }
+                    //            start Voip call
+                    voipCallStart();
                 }
             }
 

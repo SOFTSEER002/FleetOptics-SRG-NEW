@@ -91,6 +91,7 @@ public class SignatureActivity extends AppCompatActivity {
                         Toast.makeText(SignatureActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SignatureActivity.this, NotifyActivity.class);
                         intent.putExtra("signature", "signature");
+                        intent.putExtra("empPhoneNo",response.body().getEmployee_contact());
                         startActivity(intent);
                     } else {
                         Toast.makeText(SignatureActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
