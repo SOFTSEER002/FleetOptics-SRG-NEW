@@ -4,6 +4,7 @@ import com.doozycod.fleetoptics.Model.AppointmentResultModel;
 import com.doozycod.fleetoptics.Model.GetCurrentVisitors;
 import com.doozycod.fleetoptics.Model.GetEmployeeModel;
 import com.doozycod.fleetoptics.Model.ResultModel;
+import com.doozycod.fleetoptics.Model.ServerConfigModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -35,6 +36,10 @@ public interface ApiService {
     //    get Current visitors api and method
     @GET("visitor/getCurrentVisitors.php")
     Call<GetCurrentVisitors> getCurrentVisitors();
+
+    //    get Current visitors api and method
+    @GET("configuration/voip.php")
+    Call<ServerConfigModel> getServerConfig();
 
     //    signout api and method
     @POST("visitor/signOut.php")

@@ -14,37 +14,37 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.SignOutActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.PersonalMeetingActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.InterviewActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.NotifyActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="userLandscape"
             android:windowSoftInputMode="stateHidden">
 
         </activity>
         <activity
             android:name=".Activities.SpecificRecipientActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.SignatureActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.PurposeofVisitActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.PackageDeliveryActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.CheckinTypeActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.SplashActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="userLandscape"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,17 +55,15 @@
         </activity>
         <activity
             android:name=".Activities.CameraActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="userLandscape" />
         <activity
             android:name=".Activities.HomeActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="userLandscape">
 
         </activity>
     </application>
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -81,22 +79,20 @@
     <uses-feature android:name="android.software.sip" android:required="false" />
     <uses-feature android:name="android.software.sip.voip" android:required="false" />
     <uses-feature android:name="android.software.webview" android:required="false" />
-
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"></uses-permission>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.USE_SIP" />
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_CALL_LOG"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
 
 </manifest>

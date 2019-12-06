@@ -13,6 +13,7 @@
         android:paddingBottom="5dp"
         android:orientation="vertical">
         <ImageView
+            android:layout_gravity="center"
             android:id="@+id/splashLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

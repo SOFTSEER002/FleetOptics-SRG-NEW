@@ -23,6 +23,7 @@ import com.doozycod.fleetoptics.R;
 import com.doozycod.fleetoptics.Service.ApiService;
 import com.doozycod.fleetoptics.Service.ApiUtils;
 import com.doozycod.fleetoptics.Utils.CustomProgressBar;
+import com.doozycod.fleetoptics.Utils.SharedPreferencesMethod;
 import com.mizuvoip.jvoip.SipStack;
 import com.skyfishjy.library.RippleBackground;
 
@@ -51,6 +52,7 @@ public class NotifyActivity extends AppCompatActivity {
     boolean isSpeaked = false;
     RippleBackground rippleBackground;
     String empContactNumber = "";
+    SharedPreferencesMethod sharedPreferencesMethod;
 
     //    typecasting method
     private void initUI() {
@@ -70,6 +72,7 @@ public class NotifyActivity extends AppCompatActivity {
 //        hide actionbar
         getSupportActionBar().hide();
 
+        sharedPreferencesMethod = new SharedPreferencesMethod(this);
 //         typecasting
         initUI();
 
@@ -87,16 +90,7 @@ public class NotifyActivity extends AppCompatActivity {
 //      default message
         message.setText("Please Wait...");
 
-        //        if Package not require Signature
-        if (getIntent().hasExtra("no_sign")) {
-            message.setText("Please leave the package here, Thank You!");
-            message2.setText("");
-            rippleBackground.setVisibility(View.GONE);
-            delayToHome();
-//            return;
-        } else {
 
-        }
         myRunnable = new Runnable() {
             @Override
             public void run() {
@@ -105,7 +99,14 @@ public class NotifyActivity extends AppCompatActivity {
 
             }
         };
-
+//        if Package not require Signature
+        if (getIntent().hasExtra("no_sign")) {
+            message.setText("Please leave the package here, Thank You!");
+            message2.setText("");
+            rippleBackground.setVisibility(View.GONE);
+            new Handler().postDelayed(myRunnable, 10000);
+//            return;
+        }
         if (getIntent().hasExtra("Specific")) {
 //
             empContactNumber = getIntent().getStringExtra("empPhoneNo");
@@ -121,7 +122,6 @@ public class NotifyActivity extends AppCompatActivity {
             String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
             Log.e("encodedImage", "onCreate: " + encodedImage);
 //            message.setText("Please Wait...");
-
             appointmentAPI(getIntent().getStringExtra("checkin"), getIntent().getStringExtra("purpose"), getIntent().getStringExtra("name"), getIntent().getStringExtra("co_name"),
                     getIntent().getStringExtra("emailID"), getIntent().getStringExtra("phone_no"), currentDateandTime, encodedImage, getIntent().getStringExtra("empId"));
 
@@ -270,10 +270,10 @@ public class NotifyActivity extends AppCompatActivity {
                 //initialize the SIP engine
                 mysipclient = new SipStack();
                 mysipclient.Init(this);
-                mysipclient.SetParameter("loglevel", "5"); //set loglevel
-                mysipclient.SetParameter("serveraddress", "voip.generalcartage.com"); //set your voip server domain or IP:port
-                mysipclient.SetParameter("username", "7599"); //set SIP username
-                mysipclient.SetParameter("password", "rATgcjgeKvEVIQtbQegt"); //set SIP password
+                mysipclient.SetParameter("loglevel", sharedPreferencesMethod.getLogLevel()); //set loglevel
+                mysipclient.SetParameter("serveraddress", sharedPreferencesMethod.getServerAddress()); //set your voip server domain or IP:port
+                mysipclient.SetParameter("username", sharedPreferencesMethod.getUserName()); //set SIP username
+                mysipclient.SetParameter("password", sharedPreferencesMethod.getPassword()); //set SIP password
 
                 //start my event listener thread
                 notifThread = new GetNotificationsThread();
@@ -401,11 +401,9 @@ public class NotifyActivity extends AppCompatActivity {
                 Log.e("encodedImage", "onCreate: " + encodedImage);
                 message.setText("Sorry." + getIntent().getStringExtra("empName") + " is not available at this time.\n Please try again later." +
                         "\nThank you for stopping by!");
-
             }
             if (getIntent().hasExtra("interview")) {
                 message.setText("Sorry. No one is available for your interview at this time.\n Your details have been submitted – HR will contact you as soon as possible.");
-
             }
 //                go back to home screen
             delayToHome();
@@ -427,18 +425,15 @@ public class NotifyActivity extends AppCompatActivity {
                 if (getIntent().hasExtra("signature")) {
 //                message.setText("Please wait while we retrieve someone for you.");
                     message.setText("Sorry. No one is available at this time, Please try again later.");
-
                 }
                 if (getIntent().hasExtra("appointment1")) {
                     String encodedImage = Base64.encodeToString(convert(), Base64.DEFAULT);
                     Log.e("encodedImage", "onCreate: " + encodedImage);
                     message.setText("Sorry." + getIntent().getStringExtra("empName") + " is not available at this time.\n Please try again later." +
                             "\nThank you for stopping by!");
-
                 }
                 if (getIntent().hasExtra("interview")) {
                     message.setText("Sorry. No one is available for your interview at this time.\n Your details have been submitted – HR will contact you as soon as possible.");
-
                 }
             }
 //                go back to home screen
@@ -465,7 +460,7 @@ public class NotifyActivity extends AppCompatActivity {
     //    appointment api for visitor
     void appointmentAPI(String checkinType, String purpose_of_visit, String fullname, String company_name,
                         String email_address, String phone_no, String timestamp, String image, String empId) {
-        Log.e("appointmentAPI", "Array: " + fullname + empId);
+//        Log.e("appointmentAPI", "Array: " + fullname + empId);
         apiService.appointment(checkinType, purpose_of_visit, fullname, company_name, email_address, phone_no, timestamp, image, empId).enqueue(new Callback<AppointmentResultModel>() {
             @Override
             public void onResponse(Call<AppointmentResultModel> call, Response<AppointmentResultModel> response) {
@@ -486,7 +481,7 @@ public class NotifyActivity extends AppCompatActivity {
             public void onFailure(Call<AppointmentResultModel> call, Throwable t) {
 //                customProgressBar.hideProgress();
                 Toast.makeText(NotifyActivity.this, t.getMessage() + "", Toast.LENGTH_SHORT).show();
-                Log.e("REsponse", "onResponse: " + t.getMessage());
+                Log.e("Response", "onResponse: " + t.getMessage());
             }
         });
     }

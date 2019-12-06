@@ -33,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SpecificRecipientActivity extends AppCompatActivity implements CallbackListener {
-    Button submitButton;
+    Button submitButton,backSpecificButton;
     RecyclerView recycler_view;
     RecyclerAdapter recyclerAdapter;
     String checkin_type;
@@ -49,6 +49,7 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
         editTextsearchbarSpecific = findViewById(R.id.editTextsearchbarSpecific);
         submitButton = findViewById(R.id.submitButton);
         recycler_view = findViewById(R.id.recycler_view);
+        backSpecificButton = findViewById(R.id.backSpecific);
     }
 
     @Override
@@ -56,7 +57,6 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_specific_recipient);
-
         apiService = ApiUtils.getAPIService();
         customProgressBar = new CustomProgressBar(this);
 //        hide actionbar
@@ -108,8 +108,11 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
             public void onClick(View view) {
 
                 checkin_type = "Package Delivery";
-                if (!empId.equals("")) {
+                if (!empId.equals("") ) {
                     getPackageDelivered(checkin_type, empId, "Yes", "Yes");
+                }
+                if(editTextsearchbarSpecific.getText().toString().equals("")) {
+                    Toast.makeText(SpecificRecipientActivity.this, "Please enter name & select before submit!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -191,7 +194,6 @@ public class SpecificRecipientActivity extends AppCompatActivity implements Call
                 customProgressBar.hideProgress();
 
                 Toast.makeText(SpecificRecipientActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
     }
